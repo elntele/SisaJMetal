@@ -19,7 +19,7 @@ public class PTDJMetalProblem extends AbstractIntegerProblem {
 		bonsProblem = new OpticalNetworkProblem(networkLoad, gmlFile);
 	}
 	
-	// variacia do periodo
+	/*// variacia do periodo
 		public void VarianciaPeriodo(){
 			float varia=0;
 			ArrayList<Float>  minilist= new ArrayList<Float>();// um buffer pra lista
@@ -81,7 +81,7 @@ public class PTDJMetalProblem extends AbstractIntegerProblem {
 
 		
 	}
-
+*/
 	@Override
 	public void evaluate(IntegerSolution solution) {
 		Integer[] vars = new Integer[solution.getNumberOfVariables()];

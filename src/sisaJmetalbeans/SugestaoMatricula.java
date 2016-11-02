@@ -14,17 +14,8 @@ public class SugestaoMatricula {
 	private float media=(float) 2.0; //levar para o codigo
 	private List<Disciplina>  gradeDeHorarios= new ArrayList<Disciplina>(); // lista de disciplinas pois o obj disciplina tem um map com dia e hora.
 	private List <Integer> gradeHorarioSoCodigoDaDisciplina = new ArrayList<Integer>(); 
+
 	
-	public SugestaoMatricula(int cargaHoraria, float media) {
-		super();
-		this.cargaHoraria = cargaHoraria;
-		this.media = media;
-	}
-
-	public SugestaoMatricula() {
-		super();
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -67,8 +58,7 @@ public class SugestaoMatricula {
 	}
 	
 	
-	
-	/*// variacia do periodo
+	// variacia do periodo
 	public void mediaVarianciaPeriodo(){
 		float varia=0; 
 		int cont=0, deivisorPorPeriodo=0;
@@ -86,8 +76,8 @@ public class SugestaoMatricula {
 			}
 		}
 		
-	}*/
-	/*
+	}
+	
 	
 	//metodo pra contar quantas disciplinas de cada area
 	public void contadorDeArea(){
@@ -103,7 +93,26 @@ public class SugestaoMatricula {
 			}
 		}	
 	}
-*/
+	
+	// compia da sugestão apenas uam lista com os códigos
+	public void copiaDeGradeSoCodico(){
+		for(Disciplina D : gradeDeHorarios){		
+			gradeHorarioSoCodigoDaDisciplina.add(D.getCodigo());
+		}		
+	}
+	
+	public void varianciaTotal(){
+		float varia=0;
+		for(int i = 0; i<this.VarianciaPeriodo.size();i++){
+			varia += (float) Math.pow( this.VarianciaPeriodo.get(i) - this.media,2);			
+		}
+		if (this.VarianciaPeriodo.size()!=0){
+		this.varianciaTotal=(varia/this.VarianciaPeriodo.size());
+		}else{
+			this.varianciaTotal=0;
+		}
+	}
+
 	public float getMedia() {
 		return media;
 	}
@@ -139,5 +148,17 @@ public class SugestaoMatricula {
 	public void setGradeHorarioSoCodigoDaDisciplina(List<Integer> gradeHorarioSoCodigoDaDisciplina) {
 		this.gradeHorarioSoCodigoDaDisciplina = gradeHorarioSoCodigoDaDisciplina;
 	}
+	
+
+	public SugestaoMatricula() {
+		super();
+		mediaVarianciaPeriodo();
+		contadorDeArea();
+		copiaDeGradeSoCodico();
+		varianciaTotal();		
+	}
+	
+	
+	
 	
 }
