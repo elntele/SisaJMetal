@@ -16,7 +16,7 @@ public class Aluno{
 	private int tempDispExtrCla;//tempo disponível para estudar fora da faculdade
 	private int cargaHorariaDoPeriodo; // tem que ser entre 150 e 480
 	
-	private List<SugestaoMatricula> sugestMat;//objeto sugestão de matricula
+//	private List<SugestaoMatricula> sugestMat;//objeto sugestão de matricula
 	
 	/**
 	 * Disciplinas pagas.

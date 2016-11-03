@@ -8,17 +8,20 @@ import java.util.Map;
 public class Disciplina {
 	
 	/**
-	 * O periodo varia de 1 a 9 para as obrigatÃ³rias e 0 para optativas.
+	 * O periodo varia de 1 a 9 para as obrigatorias e 0 para optativas.
 	 */
 	private Long id;	
 	private int codigo;
 	private String nome;
-	private int periodo; 
-	private float grauDificuldade;
+	private String periodo; 
+	private String grauDificuldade;
 	private Area area;
-	private List<Disciplina> preRequisitos = new ArrayList<Disciplina>();
+	private Disciplina[] preRequisitos = new Disciplina[3];
 	private List<Disciplina> posRequisitos = new ArrayList<Disciplina>();
 	private String[] diaHora= new String[4];
+	private int semestre;
+	private String médiageral;
+	
 	
 	/**
 	 * Disciplinas pagas.
@@ -29,28 +32,21 @@ public class Disciplina {
 	
 	private List<Aluno> alunosAcompanhados = new ArrayList<Aluno>();
 
-
-	
 	public Disciplina() {
 		super();
 	}
 
-		
-
-
-
-	public Disciplina(int codigo, String nome, int periodo, float grauDificuldade, String[] diaHora) {
+	public Disciplina(int codigo, String nome, String periodo, String grauDificuldade, Area area, String[] diaHora,
+			int semestre) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
 		this.periodo = periodo;
 		this.grauDificuldade = grauDificuldade;
+		this.area = area;
 		this.diaHora = diaHora;
+		this.semestre = semestre;
 	}
-
-
-
-
 
 	public Long getId() {
 		return id;
@@ -58,6 +54,14 @@ public class Disciplina {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getMédiageral() {
+		return médiageral;
+	}
+
+	public void setMédiageral(String médiageral) {
+		this.médiageral = médiageral;
 	}
 
 	public int getCodigo() {
@@ -76,14 +80,13 @@ public class Disciplina {
 		this.nome = nome;
 	}
 
-	public int getPeriodo() {
+	public String getPeriodo() {
 		return periodo;
 	}
 
-	public void setPeriodo(int periodo) {
+	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
-
 
 
 	public Area getArea() {
@@ -91,15 +94,9 @@ public class Disciplina {
 	}
 
 
-
-
-
 	public void setArea(Area area) {
 		this.area = area;
 	}
-
-
-
 
 
 	public String[] getDiaHora() {
@@ -110,32 +107,36 @@ public class Disciplina {
 		this.diaHora = diaHora;
 	}
 
+	public int getSemestre() {
+		return semestre;
+	}
 
+	public void setSemestre(int semestre) {
+		this.semestre = semestre;
+	}
 
-
-
-	public float getGrauDificuldade() {
+	public String getGrauDificuldade() {
 		return grauDificuldade;
 	}
 
-	public void setGrauDificuldade(float grauDificuldade) {
+	public void setGrauDificuldade(String grauDificuldade) {
 		this.grauDificuldade = grauDificuldade;
 	}
-
-	public List<Disciplina> getPreRequisitos() {
-		return preRequisitos;
-	}
-
-	public void setPreRequisitos(List<Disciplina> preRequisitos) {
-		this.preRequisitos = preRequisitos;
-	}
-
+	
 	public List<Disciplina> getPosRequisitos() {
 		return posRequisitos;
 	}
 
 	public void setPosRequisitos(List<Disciplina> posRequisitos) {
 		this.posRequisitos = posRequisitos;
+	}
+
+	public Disciplina[] getPreRequisitos() {
+		return preRequisitos;
+	}
+
+	public void setPreRequisitos(Disciplina[] preRequisitos) {
+		this.preRequisitos = preRequisitos;
 	}
 
 	public List<Aluno> getAlunosPagaram() {
