@@ -29,7 +29,9 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import sisaJmetal2.sisaJmetal.src.sisaJmetalbeans.SugestaoMatricula;
+
+import sisaJmetalbeans.Aluno;
+import sisaJmetalbeans.SugestaoMatricula;
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
@@ -40,13 +42,14 @@ public class Main {
 		SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
 		String referenceParetoFront = "";
 		SugestaoMatricula sugestao = new SugestaoMatricula();
+		Aluno aluno = new Aluno("abc", "123", false, "a@a", 2013, 1, 9, "FC", 0, 300);
 		
 		
+		PreparacaoDoProblema preparacao =new PreparacaoDoProblema(aluno);
 		
 		
-		
-		problem = new PTDJMetalProblem(100, "benchmarks/nsfnet.gml");
-
+		//problem = new PTDJMetalProblem(100, "benchmarks/nsfnet.gml");
+		problem = new MatriculaMetalProblem();
 		double crossoverProbability = 1.0;
 		//crossover = new OpticalNetworkCrossover(crossoverProbability);
 
