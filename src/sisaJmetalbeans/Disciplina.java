@@ -14,7 +14,7 @@ public class Disciplina {
 	private int codigo;
 	private String nome;
 	private String periodo; 
-	private String grauDificuldade;
+	private float grauDificuldade;
 	private Area area;
 	private List <Integer> preRequisitos = new ArrayList<Integer>();
 	private List<Disciplina> posRequisitos = new ArrayList<Disciplina>();
@@ -35,7 +35,7 @@ public class Disciplina {
 		super();
 	}
 
-	public Disciplina(int codigo, String nome, String periodo, String grauDificuldade, Area area, String[] diaHora,
+	public Disciplina(int codigo, String nome, String periodo, float grauDificuldade, Area area, String[] diaHora,
 			int semestre) {
 		super();
 		this.codigo = codigo;
@@ -114,12 +114,14 @@ public class Disciplina {
 		this.semestre = semestre;
 	}
 
-	public String getGrauDificuldade() {
+	public float getGrauDificuldade() {
 		return grauDificuldade;
 	}
 
 	public void setGrauDificuldade(String grauDificuldade) {
-		this.grauDificuldade = grauDificuldade;
+		float grau= Float.parseFloat(grauDificuldade);
+
+		this.grauDificuldade = grau;
 	}
 	
 	public List<Disciplina> getPosRequisitos() {
