@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/Jmetal lib/Jmetal lib/jmetal-problem-5.2-SNAPSHOT-jar-with-dependencies.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/Jmetal lib/Jmetal lib/jmetal-problem-5.2-SNAPSHOT-javadoc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/Jmetal lib/Jmetal lib/jmetal-problem-5.2-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

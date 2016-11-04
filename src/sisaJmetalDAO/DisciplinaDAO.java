@@ -24,7 +24,7 @@ public class DisciplinaDAO {
  */		
 	public List<Disciplina> getDisciplinas(){
 		
-		Connection conexao = ConexaoPostgresql.getConnection();
+		//Connection conexao = ConexaoPostgresql.getConnection();
 		
 		//Conexão para o Mysql - Jorge
 		Connection con = Conexao.getConnection();
@@ -32,10 +32,10 @@ public class DisciplinaDAO {
 		try {
 			
 			List<Disciplina> disciplinas = new ArrayList<>();
-			String sql = "SELECT * FROM cadeiras";
-			PreparedStatement pstmt = conexao.prepareStatement(sql);
+			String sql = "SELECT * FROM disciplinas";
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-		
+			String[] diaHora= new String[5];
 			while (rs.next()) {
 				Disciplina disciplinaTemporaria = new Disciplina();
 				Area areaTemporaria = new Area();
@@ -44,11 +44,18 @@ public class DisciplinaDAO {
 				disciplinaTemporaria.setNome(rs.getString("nome"));
 				areaTemporaria.setNome(rs.getString("Área"));
 				disciplinaTemporaria.setArea(areaTemporaria);
-				//disciplinaTemporaria.setPreRequisitos(rs.getArray("prérequisitos"));
+				disciplinaTemporaria.setPreRequisitos(rs.getString("Pré-requisitos"));
 				disciplinaTemporaria.setSemestre(rs.getInt("semestre"));
-				disciplinaTemporaria.setMédiageral(rs.getString("médiageral"));
+				disciplinaTemporaria.setMédiageral(rs.getString("média geral"));
 				disciplinaTemporaria.setGrauDificuldade(rs.getString("dificudade"));
+				diaHora[0]=rs.getString("segunda");
+				diaHora[1]=rs.getString("terça");
+				diaHora[2]=rs.getString("quarta");
+				diaHora[3]=rs.getString("quinta");
+				diaHora[4]=rs.getString("sexta");
+				disciplinaTemporaria.setDiaHora(diaHora);
 				disciplinas.add(disciplinaTemporaria);
+				
 			}
 			rs.close();
 			pstmt.close();

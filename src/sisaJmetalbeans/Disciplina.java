@@ -16,12 +16,11 @@ public class Disciplina {
 	private String periodo; 
 	private String grauDificuldade;
 	private Area area;
-	private Disciplina[] preRequisitos = new Disciplina[3];
+	private List <Integer> preRequisitos = new ArrayList<Integer>();
 	private List<Disciplina> posRequisitos = new ArrayList<Disciplina>();
-	private String[] diaHora= new String[4];
+	private String[] diaHora= new String[5];
 	private int semestre;
 	private String médiageral;
-	
 	
 	/**
 	 * Disciplinas pagas.
@@ -131,12 +130,20 @@ public class Disciplina {
 		this.posRequisitos = posRequisitos;
 	}
 
-	public Disciplina[] getPreRequisitos() {
+
+	public List<Integer> getPreRequisitos() {
 		return preRequisitos;
 	}
 
-	public void setPreRequisitos(Disciplina[] preRequisitos) {
-		this.preRequisitos = preRequisitos;
+	public void setPreRequisitos(String pre) {
+		String[] parts = pre.split (";");
+		int buffer;
+		if (!pre.equals("")){
+		for (int i=0;i< parts.length;i++){	
+			buffer=Integer.parseInt(parts[i]);
+			this.preRequisitos.add(buffer);
+		}		
+		}
 	}
 
 	public List<Aluno> getAlunosPagaram() {
