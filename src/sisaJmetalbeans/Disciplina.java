@@ -10,7 +10,7 @@ public class Disciplina {
 	/**
 	 * O periodo varia de 1 a 9 para as obrigatorias e 0 para optativas.
 	 */
-	private Long id;	
+	private int id;	
 	private int codigo;
 	private String nome;
 	private String periodo; 
@@ -47,11 +47,11 @@ public class Disciplina {
 		this.semestre = semestre;
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

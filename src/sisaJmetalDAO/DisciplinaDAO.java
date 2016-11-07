@@ -40,6 +40,7 @@ public class DisciplinaDAO {
 				Disciplina disciplinaTemporaria = new Disciplina();
 				Area areaTemporaria = new Area();
 				disciplinaTemporaria.setPeriodo(rs.getString("periodo"));
+				disciplinaTemporaria.setId(rs.getInt("id"));
 				disciplinaTemporaria.setCodigo(rs.getInt("código"));
 				disciplinaTemporaria.setNome(rs.getString("nome"));
 				areaTemporaria.setNome(rs.getString("Área"));

@@ -83,7 +83,7 @@ public class SugestaoMatricula {
 	public void contadorDeArea(){
 		for(Disciplina D : gradeDeHorarios){
 			switch (D.getArea().getNome()){
-				case "ensiso": this.contadorAreaEnsiso+=1;
+				case "Ensiso": this.contadorAreaEnsiso+=1;
 								break;
 				case "Arq": this.contadorAreaArq+=1;
 								break;
