@@ -14,7 +14,8 @@ public class TesteComPrint {
 		
 		DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 		Aluno aluno = new Aluno("abc", "123", false, "a@a", 2013, 1, 9, "FC", 0, 300);
-		 PreparacaoDoProblema problema = new PreparacaoDoProblema(aluno);
+		 
+		PreparacaoDoProblema problema = new PreparacaoDoProblema(aluno);
 		//List<Disciplina> disciplinas = disciplinaDAO.getDisciplinas();
 		 List<Disciplina> disciplinas = problema.getDisciplinas();
 		 MatriculaMetalProblem matriculaMetal = new MatriculaMetalProblem(problema); 

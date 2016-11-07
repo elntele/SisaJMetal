@@ -45,8 +45,13 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 				varia += (float) Math.pow( dificuldade-2 ,2);				
 				}
 			if (i%8==0){
+				if (divisorPorPeriodo!=0){
 				varia =varia/divisorPorPeriodo;
 				divisorPorPeriodo=0;
+				}else{
+					varia=0;
+				}
+				
 				this.varianciaDoPeriodo.add(varia);
 			}
 			
