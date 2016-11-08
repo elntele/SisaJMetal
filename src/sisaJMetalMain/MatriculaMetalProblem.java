@@ -15,10 +15,13 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 	private int upperBound;	
 	private List <Float> varianciaDoPeriodo=new ArrayList();
 	private Float varianciaTotal;
+	private int tempoDeFormatura;
 	//problemaPreparado pode fornecer 3 informações:
 	// lista com as disciplinas que faltam pagar
 	//número de máximo períodos restante para concluir o curso
 	// quantas disciplinas ainda falta pagar para cocluir o curso
+	
+	
 	
 	public float RetornaGrauDificuldadeDaDisc(int id){
 		Disciplina R=null;
@@ -44,10 +47,10 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 				dificuldade=RetornaGrauDificuldadeDaDisc(problemaPreparado.getSugestaoMat()[i]);
 				varia += (float) Math.pow( dificuldade-2 ,2);				
 				}
-			if (i%8==0){
+			if (i%8==0 && i>0){
 				if (divisorPorPeriodo!=0){
-				varia =varia/divisorPorPeriodo;
-				divisorPorPeriodo=0;
+					varia =varia/divisorPorPeriodo;
+					divisorPorPeriodo=0;
 				}else{
 					varia=0;
 				}
@@ -69,6 +72,18 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		}else{
 			varianciaTotal=(float) 0;
 		}
+	}
+	
+	public void contaTempoDeFormatura(){
+		int fimDeCurso=0;
+		int numeroDePeriodos=0;
+		for (int i=0;i<problemaPreparado.getSugestaoMat().length;i++){
+			if (problemaPreparado.getSugestaoMat()[i]!=0){
+				fimDeCurso=i;
+			}
+		} 
+		this.tempoDeFormatura=fimDeCurso/8;
+		if (fimDeCurso%8>0) this.tempoDeFormatura+=1;
 	}
 	
 	
@@ -152,11 +167,17 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 
 	
 
+	public int getTempoDeFormatura() {
+		return tempoDeFormatura;
+	}
+
+
 	public MatriculaMetalProblem(PreparacaoDoProblema preparacao) {
 		this.problemaPreparado = preparacao;		
 		this.upperBound=preparacao.getDisciplinas().size();
 		VarianciaPeriodo();
 		varianciaTotal();
+		contaTempoDeFormatura();
 	}
 
 

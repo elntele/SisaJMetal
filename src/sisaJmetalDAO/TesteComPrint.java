@@ -19,13 +19,17 @@ public class TesteComPrint {
 		//List<Disciplina> disciplinas = disciplinaDAO.getDisciplinas();
 		 List<Disciplina> disciplinas = problema.getDisciplinas();
 		 MatriculaMetalProblem matriculaMetal = new MatriculaMetalProblem(problema); 
-		int l=1;
+		
+		 int l=1;
 		 for (float V:matriculaMetal.getVarianciaDoPeriodo()){
-		 System.out.println("variancia periodo: "+l+": "+V);
+		 System.out.println("variancia do periodo "+l+": "+V);
+		 l+=1;
 		 }
+		 System.out.println("Variancia Total: "+matriculaMetal.getVarianciaTotal());
 		 
 		 System.out.println("numero de periodos restantes : "+problema.getPeriodosRestantes());
 		 System.out.println("quantidade de disciplinas para concluir nº: "+problema.getQtdDiscplinasParaConcluir());
+		 
 		 /**
 		  * dentro de aluno
 		  */
@@ -62,6 +66,8 @@ public class TesteComPrint {
 			System.out.println("disciplina id "+ problema.getSugestaoMat()[i]);
 		}
 		
+		System.out.println("Se formou em: "+matriculaMetal.getTempoDeFormatura()+" periodos");
+
 		
 		
 		
