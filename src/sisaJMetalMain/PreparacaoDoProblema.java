@@ -10,17 +10,27 @@ import sisaJmetalbeans.Disciplina;
 
 public class PreparacaoDoProblema {
 	private Aluno aluno;
-	private int periodosRestantes;
-	private int QtdDiscplinasParaConcluir;
+	private List <Float> varianciaDoPeriodo=new ArrayList<Float>();
 	private List<Disciplina> naoPagas=new  ArrayList <Disciplina>();
-	private int AreaDePreferencia;
-	private int numberOfObjetives=5;
-	private int[] sugestaoMat;
+	private List <Float> variaQtdDiscPorPeriodo=new ArrayList <Float>();
 	DisciplinaDAO disciplinaDAO = new DisciplinaDAO();	
 	List<Disciplina> disciplinas = disciplinaDAO.getDisciplinas();
+	private int[] sugestaoMat;
+	private int AreaDePreferencia;
+	private int numberOfObjetives=5;
+	private int periodosRestantes;
+	private int QtdDiscplinasParaConcluir;
+	private int qtdDiscForaDaMinhaArea;
+	private Float varianciaTotal;
+	private int tempoDeFormatura;
+	private float verificaAcompanhada;
 	
-
-	//tempo que o aluno ainda tem ate completar 16 periodos
+		
+	/**
+	 *  seta a variavel periodosRestantes com o tempo que o aluno 
+	 *  ainda tem ate completar 16 periodos que é o maximo de perodos
+	 *  do curso.
+	 */	
 	public void tempoDeFimDecurso (){
 	int periodosGastos = ((2016-this.aluno.getAnoIngresso())*2);	
 		if (aluno.getSemestreIngresso()==2){
@@ -29,6 +39,11 @@ public class PreparacaoDoProblema {
 		this.periodosRestantes=16-periodosGastos;
 	}
 	
+
+	/**
+	 * simula a lista de displicinas que o aluno já pagou mas sera
+	 * abandonado porque isso será recuperado do cadastro do aluno no banco
+	 */
 	//disciplinas pagas
 	public void montaListaDisciplinasPagas(){
 		int i=1;
@@ -42,6 +57,13 @@ public class PreparacaoDoProblema {
 			}
 		aluno.setDiscPagas(transfer);
 		}
+	
+	/**
+	 * metodo simula a lista de disciplinas acompanhadas e reprovadas
+	 *  para teste mas será abandonado porque isso será recuperado do 
+	 *  cadastro do aluno no banco
+	 */
+	
 
 	//disciplina acompanhada e reprovada
 	public void montaListaDisciplinasReprovadas(){
@@ -54,11 +76,21 @@ public class PreparacaoDoProblema {
 			}
 		}
 	}
+	
+	/**
+	 * seta a variavel QtdDiscplinasParaConcluir com o numero de disciplinas
+	 * que faltam para o aluno concluir o curso
+	 */
 	public void montaQtdDiscplinasParaConcluir(){
 		this.QtdDiscplinasParaConcluir=45-aluno.getDiscPagas().size();
 		
 	}
 	
+	/**
+	 * seta a lista nao pagas com a qtd de disciplina que 
+	 * o aluno ainda não pagou, ou seja, sao as disciplinas
+	 * do curso que ele ainda pode ou deve pagar 
+	 */
 	public void montaNaoPagas(){
 		List<Disciplina> faltaPagar=new ArrayList();
 		boolean presenca=false;
@@ -74,6 +106,11 @@ public class PreparacaoDoProblema {
 		}
 		this.naoPagas=faltaPagar;
 	}
+	
+	/**
+	 * método monta uma sugestão para teste, mas será abandonado porque isso 
+	 * será recebido dos metodos de mescla de cromossomos do jmetal
+	 */
 	
 	public void montasugestao(){
 		List<Disciplina> copia=new ArrayList();
@@ -103,7 +140,225 @@ public class PreparacaoDoProblema {
 		this.sugestaoMat=sugestao;
 			}
 		
-				 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * metodo auxiliar para o metodo varianciaDoPeriodo
+	 * retorna o grau de dificuldade de uma cadeira
+	 */
+	public float RetornaGrauDificuldadeDaDisc(int id){
+		Disciplina R=null;
+		for (Disciplina D:this.getNaoPagas()){
+			if (D.getId()==id){
+				R=D;
+				break;
+			}
+		}
+		return R.getGrauDificuldade();
+	}
+	/**
+	 * metodo auxilar para qtdDeDisciplinasForaDeMinhaArea, 
+	 * ele retorna o tipo de area da disciplina:
+	 * 1 -Arq
+	 * 2-Ensiso
+	 * 3-Fc
+	 * @param id
+	 * @return
+	 */
+	public int RetornaArea(int id){
+		Disciplina R=null;
+		int retorno=0;
+		for (Disciplina D:disciplinas){
+			if (D.getId()==id){
+				R=D;
+				break;
+			}
+		}
+		
+		switch (R.getArea().getNome()){
+		 case "ARQ": retorno=1;
+		 			break;
+		 case "Ensiso":  retorno=2;
+			break;
+		 case "FC":  retorno=3;
+			break;
+		 default: break;
+
+		 }
+
+		return  retorno;
+	}
+	
+	/**
+	 * calcula a variancia de nivel de dificuldade dos periodos
+	 * e seta a variavel varianciDoPeriodo 
+	 */
+	
+	
+	public void varianciaPeriodo(){
+		float varia=0;
+		float dificuldade;
+		ArrayList<Float>  variaPorPeriodo= new ArrayList<Float>();// um buffer pra lista
+		ArrayList<Float>  variaPorTotal= new ArrayList<Float>();
+		int divisorPorPeriodo=0;
+		for(int i=0;i<this.getSugestaoMat().length;i++) {// percorre o array de disciplinas para calcular a variancia por periodo			
+			if (this.getSugestaoMat()[i]!=0){ 
+				divisorPorPeriodo+=1;
+				dificuldade=RetornaGrauDificuldadeDaDisc(sugestaoMat[i]);
+				varia += (float) Math.pow( dificuldade-2 ,2);				
+				}
+			if (i%8==0 && i>0){
+				if (divisorPorPeriodo!=0){
+					varia =varia/divisorPorPeriodo;
+					divisorPorPeriodo=0;
+				}else{
+					varia=0;
+				}
+				
+				this.varianciaDoPeriodo.add(varia);
+			}
+			
+		}
+		
+	}
+	/**
+	 * calcula a variancia de nivel de dificuldade total setando a variavel variancia total
+	 */
+
+	public void varianciaTotal(){
+		float varia=0;
+		for(int i = 0; i<varianciaDoPeriodo.size();i++){
+			varia += (float) Math.pow( this.varianciaDoPeriodo.get(i) - 2,2);			
+		}
+		if (varianciaDoPeriodo.size()!=0){
+		this.varianciaTotal=(varia/varianciaDoPeriodo.size());
+		}else{
+			varianciaTotal=(float) 0;
+		}
+	}
+ /**
+  * verifica se a disciplina acompanhada esta no primeiro
+  * periodo da sugestão setando a variavel float verificaAcompanhada
+  * como os valores entre 0 e 1 (quanto menor melhor).
+  * OBS: ela só a ssume o valor 0 se o aluno só tiver uma disciplina acompanhada 
+  * e ela estiver no primeiro periodo e só assume o valor 1 em caso o contário...
+  * se o aluno tiver mais de uma disciplina acompanhada verificaAcompanhada 
+  * vai assumir valores entre 0.9 e 0 (intervalo aberto)
+  */
+	public void verificaAcompNoPrimeDasug(){
+		float retorno=0;
+		float qtdAcomp=this.aluno.getDiscAcompanhada().size();
+		int divisor=0;
+		if(qtdAcomp==1){
+			for (int i=0;i<8;i++){
+				for (Disciplina D:this.aluno.getDiscAcompanhada()){
+					if (this.sugestaoMat[i]==D.getId()){
+						retorno=0;
+					}else{
+						retorno=1;
+					}
+				}		
+			}			
+		}else{
+			for (int i=0;i<8;i++){
+				for (Disciplina D:this.aluno.getDiscAcompanhada()){
+					if (this.sugestaoMat[i]==D.getId()){
+						divisor+=1;						
+					}
+					if (divisor >0){ 
+						retorno= (float) (0.9/divisor);
+						}else{ 
+							retorno= 1;
+						}
+				}
+			}
+		}
+		this.verificaAcompanhada= retorno;		
+	}
+	/**
+	 * seta a variavel int tempoDeFormatura com a qtd de periodos que
+	 * o aluno vai se forma
+	 */
+	
+	public void contaTempoDeFormatura(){
+		int fimDeCurso=0;
+		int numeroDePeriodos=0;
+		for (int i=0;i<sugestaoMat.length;i++){
+			if (sugestaoMat[i]!=0){
+				fimDeCurso=i;
+			}
+		} 
+		this.tempoDeFormatura=fimDeCurso/8;
+		if (fimDeCurso%8>0) this.tempoDeFormatura+=1;
+	}
+	/**
+	 * seta o inteiro qtdDiscForaDaMinhaArea com a qtd de disciplina fora da area
+	 * de preferência do aluno
+	 */
+	
+	public void qtdDeDisciplinasForaDeMinhaArea(){
+		int contador=0;
+		for (int i=0;i<this.tempoDeFormatura*8;i++ ){
+			if (sugestaoMat[i]!=0){
+				for(Disciplina D:disciplinas){
+					if (D.getId()==sugestaoMat[i]){
+						if (RetornaArea(sugestaoMat[i])!=this.AreaDePreferencia){
+							contador+=1;
+						}
+					}
+				}
+			}	
+		}
+		this.qtdDiscForaDaMinhaArea=contador;
+	}
+	
+	public void montaAredePreferencia(){
+		 switch (this.aluno.getAreaPref()){
+		 case "ARQ": this.AreaDePreferencia=1;
+		 			break;
+		 case "Ensiso": this.AreaDePreferencia=2;
+			break;
+		 case "FC": this.AreaDePreferencia=3;
+			break;
+		 default: break;
+
+		 }
+			
+		}
+	
+	/**
+	 * seta a lista variaQtdDiscPorPeriodo com a variancia
+	 * de quantidade de disciplina em cada periodo relativos
+	 * a media de 5 disciplinas por periodo
+	 * obs.: talvez seja necessario manipular este metodo para que
+	 * no primeiro periodo ou seja i<8 a variancia seja 3...
+	 * dica: Usar varia =(float) Math.pow(cont-3, 2)/8 para i<8
+	 */
+	public void varianciaDeQtdDeDiscPorPeriodo(){
+		int cont=0;
+		float varia=0;
+		List <Float> listaLocalVariaqtdDisc=new ArrayList();
+		for (int i=0; i<this.tempoDeFormatura*8;i++){
+			if (sugestaoMat[i]!=0){
+				cont+=1;
+			}
+			if (i%8==0 && i!=0){
+				if (cont!=0){
+					varia =(float) Math.pow(cont-5, 2)/8;
+				}else{
+					varia=1;
+				}			
+			}
+			listaLocalVariaqtdDisc.add(varia);
+		}
+		this.variaQtdDiscPorPeriodo=listaLocalVariaqtdDisc;
+	}
+	
+/**
+ * getters and  any setters 	
+ * @return
+ */
 
 	
 	public Aluno getAluno() {
@@ -149,21 +404,41 @@ public class PreparacaoDoProblema {
 	public int getAreaDePreferencia() {
 		return AreaDePreferencia;
 	}
-
-	public void montaAredePreferencia(){
-	 switch (this.aluno.getAreaPref()){
-	 case "ARQ": this.AreaDePreferencia=1;
-	 			break;
-	 case "Ensiso": this.AreaDePreferencia=2;
-		break;
-	 case "FC": this.AreaDePreferencia=3;
-		break;
-	 default: break;
-
-	 }
-		
-	}
 	
+	public void setSugestaoMat(int[] sugestaoMat) {
+		this.sugestaoMat = sugestaoMat;
+	}
+		
+	public List<Float> getVarianciaDoPeriodo() {
+		return varianciaDoPeriodo;
+	}
+
+
+	public List<Float> getVariaQtdDiscPorPeriodo() {
+		return variaQtdDiscPorPeriodo;
+	}
+
+
+	public int getQtdDiscForaDaMinhaArea() {
+		return qtdDiscForaDaMinhaArea;
+	}
+
+
+	public Float getVarianciaTotal() {
+		return varianciaTotal;
+	}
+
+
+	public int getTempoDeFormatura() {
+		return tempoDeFormatura;
+	}
+
+
+	public float getVerificaAcompanhada() {
+		return verificaAcompanhada;
+	}
+
+
 	public PreparacaoDoProblema(Aluno aluno) {
 		super();
 		this.aluno = aluno;
@@ -176,5 +451,25 @@ public class PreparacaoDoProblema {
 		montasugestao();
 	}
 	
+	
+
+	public PreparacaoDoProblema(Aluno aluno, int[] vetor) {
+		super();
+		this.aluno = aluno;
+		tempoDeFimDecurso ();
+		montaListaDisciplinasPagas();
+		montaListaDisciplinasReprovadas();
+		montaQtdDiscplinasParaConcluir();
+		montaNaoPagas();
+		montaAredePreferencia();
+		varianciaPeriodo();
+		varianciaTotal();
+		verificaAcompNoPrimeDasug();
+		contaTempoDeFormatura();
+		qtdDeDisciplinasForaDeMinhaArea();
+		verificaAcompNoPrimeDasug();
+		this.sugestaoMat=vetor;	
+	}
+
 	
 }
