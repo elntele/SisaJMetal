@@ -105,23 +105,12 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		}
 		//setando a sugestão de matricula em problema preparado
 		problemaPreparado.setSugestaoMat(vars);		
-		Double[] objectives = new Double[problemaPreparado.getTempoDeFormatura()*2+2];
+		Double[] objectives = new Double[4];
 		solution.setObjective(0, problemaPreparado.getTempoDeFormatura());
 		solution.setObjective(1, problemaPreparado.getVarianciaTotal());
 		solution.setObjective(2, problemaPreparado.getQtdDiscForaDaMinhaArea());
-		//solution.setObjective(3, problemaPreparado.getVerificaAcompanhada());
-		//colocando a variancia de cada periodo para ser avaliada
-		int i=0;
-		for ( i=0;i<problemaPreparado.getTempoDeFormatura();i++){//
-			solution.setObjective(i+4, problemaPreparado.getVarianciaDoPeriodo().get(i));
-		}
-		i+=1;
-		//colocando a variancia de qtd de discilinas por periodo
-		for (int k=0; k<problemaPreparado.getTempoDeFormatura();k++){//
-			solution.setObjective(i+4, problemaPreparado.getVariaQtdDiscPorPeriodo().get(k));
-			i+=1;
-	}
-
+		solution.setObjective(3, problemaPreparado.getVariaQtdDiscPorPeriodo());
+		
 	}
 	
 	
@@ -154,12 +143,6 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 													// de sugestão de matricula	
 	}
 
-	// jorge
-	// qual seria o lowerbound em nosso contexto
-	//@Override
-	//	public Integer getLowerBound(int index) {
-	//		return bonsProblem.getLowerLimitVariableAt(index);
-	//	}
 	
 	@Override
 	public Integer getLowerBound(int index) {

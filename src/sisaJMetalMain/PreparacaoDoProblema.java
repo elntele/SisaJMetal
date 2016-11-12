@@ -10,9 +10,9 @@ import sisaJmetalbeans.Disciplina;
 
 public class PreparacaoDoProblema {
 	private Aluno aluno;
-	private List <Float> varianciaDoPeriodo=new ArrayList<Float>();
+//	private List <Float> varianciaDoPeriodo=new ArrayList<Float>();
 	private List<Disciplina> naoPagas=new  ArrayList <Disciplina>();
-	private List <Float> variaQtdDiscPorPeriodo=new ArrayList <Float>();
+	private float variaQtdDiscPorPeriodo;
 	DisciplinaDAO disciplinaDAO = new DisciplinaDAO();	
 	List<Disciplina> disciplinas = disciplinaDAO.getDisciplinas();
 	private int[] sugestaoMat;
@@ -196,27 +196,27 @@ public class PreparacaoDoProblema {
 	 */
 	
 	
-	public void varianciaPeriodo(){
+	public void varianciaTotal(){
 		float varia=0;
-		float dificuldade;
-		ArrayList<Float>  variaPorPeriodo= new ArrayList<Float>();// um buffer pra lista
-		ArrayList<Float>  variaPorTotal= new ArrayList<Float>();
+		float dificuldade=0;
+		float mediaDoPeriodo=0;
 		int divisorPorPeriodo=0;
-		for(int i=0;i<this.getSugestaoMat().length;i++) {// percorre o array de disciplinas para calcular a variancia por periodo			
+		for(int i=0;i<this.tempoDeFormatura*8;i++) {// percorre o array de disciplinas para calcular a variancia por periodo			
 			if (this.getSugestaoMat()[i]!=0){ 
 				divisorPorPeriodo+=1;
-				dificuldade=RetornaGrauDificuldadeDaDisc(sugestaoMat[i]);
-				varia += (float) Math.pow( dificuldade-2 ,2);				
+				dificuldade+=RetornaGrauDificuldadeDaDisc(sugestaoMat[i]);
+								
 				}
 			if (i%8==0 && i>0){
-				if (divisorPorPeriodo!=0){
-					varia =varia/divisorPorPeriodo;
+				if (divisorPorPeriodo!=0){					
+					mediaDoPeriodo=dificuldade/divisorPorPeriodo;
+					varia += (float) Math.pow( mediaDoPeriodo-2 ,2);
 					divisorPorPeriodo=0;
+					mediaDoPeriodo=0;
 				}else{
-					varia=0;
-				}
-				
-				this.varianciaDoPeriodo.add(varia);
+					mediaDoPeriodo=100;// valor colocado para quando a sugestão vir com
+				}			 		   // periodos só com 0 sem matricula, muito ruim...
+				this.varianciaTotal=varia/this.tempoDeFormatura;
 			}
 			
 		}
@@ -226,17 +226,17 @@ public class PreparacaoDoProblema {
 	 * calcula a variancia de nivel de dificuldade total setando a variavel variancia total
 	 */
 
-	public void varianciaTotal(){
-		float varia=0;
-		for(int i = 0; i<varianciaDoPeriodo.size();i++){
-			varia += (float) Math.pow( this.varianciaDoPeriodo.get(i) - 2,2);			
-		}
-		if (varianciaDoPeriodo.size()!=0){
-		this.varianciaTotal=(varia/varianciaDoPeriodo.size());
-		}else{
-			varianciaTotal=(float) 0;
-		}
-	}
+//	public void varianciaTotal(){
+//		float varia=0;
+//		for(int i = 0; i<varianciaDoPeriodo.size();i++){
+//			varia += (float) Math.pow( this.varianciaDoPeriodo.get(i) - 2,2);			
+//		}
+//		if (varianciaDoPeriodo.size()!=0){
+//		this.varianciaTotal=(varia/varianciaDoPeriodo.size());
+//		}else{
+//			varianciaTotal=(float) 0;
+//		}
+//	}
  /**
   * verifica se a disciplina acompanhada esta no primeiro
   * periodo da sugestão setando a variavel float verificaAcompanhada
@@ -338,21 +338,31 @@ public class PreparacaoDoProblema {
 	public void varianciaDeQtdDeDiscPorPeriodo(){
 		int cont=0;
 		float varia=0;
+		float media=0;
+		int totalDeDisc=0;
 		List <Float> listaLocalVariaqtdDisc=new ArrayList();
+		for (int i=0; i<this.tempoDeFormatura*8;i++){
+			if (sugestaoMat[i]!=0){
+				totalDeDisc+=1;
+			}
+		}
+		media=totalDeDisc/tempoDeFormatura;
+		
 		for (int i=0; i<this.tempoDeFormatura*8;i++){
 			if (sugestaoMat[i]!=0){
 				cont+=1;
 			}
 			if (i%8==0 && i!=0){
 				if (cont!=0){
-					varia =(float) Math.pow(cont-5, 2)/8;
+					varia +=(float) Math.pow(cont-media, 2);
 				}else{
-					varia=1;
+					varia+=100;// caso o periodo não tenha disciplina
 				}			
 			}
-			listaLocalVariaqtdDisc.add(varia);
+			//listaLocalVariaqtdDisc.add(varia);
 		}
-		this.variaQtdDiscPorPeriodo=listaLocalVariaqtdDisc;
+		
+		this.variaQtdDiscPorPeriodo=varia/tempoDeFormatura;
 	}
 	
 /**
@@ -409,12 +419,9 @@ public class PreparacaoDoProblema {
 		this.sugestaoMat = sugestaoMat;
 	}
 		
-	public List<Float> getVarianciaDoPeriodo() {
-		return varianciaDoPeriodo;
-	}
 
 
-	public List<Float> getVariaQtdDiscPorPeriodo() {
+	public float getVariaQtdDiscPorPeriodo() {
 		return variaQtdDiscPorPeriodo;
 	}
 
@@ -462,10 +469,10 @@ public class PreparacaoDoProblema {
 		montaQtdDiscplinasParaConcluir();
 		montaNaoPagas();
 		montaAredePreferencia();
-		varianciaPeriodo();
+		contaTempoDeFormatura();
+		//varianciaPeriodo();
 		varianciaTotal();
 		verificaAcompNoPrimeDasug();
-		contaTempoDeFormatura();
 		qtdDeDisciplinasForaDeMinhaArea();
 		verificaAcompNoPrimeDasug();
 		this.sugestaoMat=vetor;	
