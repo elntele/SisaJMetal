@@ -105,11 +105,12 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		}
 		//setando a sugestão de matricula em problema preparado
 		problemaPreparado.setSugestaoMat(vars);		
-		Double[] objectives = new Double[4];
+		Double[] objectives = new Double[5];
 		solution.setObjective(0, problemaPreparado.getTempoDeFormatura());
 		solution.setObjective(1, problemaPreparado.getVarianciaTotal());
 		solution.setObjective(2, problemaPreparado.getQtdDiscForaDaMinhaArea());
 		solution.setObjective(3, problemaPreparado.getVariaQtdDiscPorPeriodo());
+		solution.setObjective(4, problemaPreparado.getTempoExtraClasse());
 		
 	}
 	

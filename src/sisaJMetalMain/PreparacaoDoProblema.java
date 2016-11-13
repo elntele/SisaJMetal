@@ -24,6 +24,7 @@ public class PreparacaoDoProblema {
 	private Float varianciaTotal;
 	private int tempoDeFormatura;
 	private float verificaAcompanhada;
+	private float tempoExtraClasse;
 	
 		
 	/**
@@ -214,13 +215,16 @@ public class PreparacaoDoProblema {
 					divisorPorPeriodo=0;
 					mediaDoPeriodo=0;
 				}else{
-					mediaDoPeriodo=100;// valor colocado para quando a sugestão vir com
-				}			 		   // periodos só com 0 sem matricula, muito ruim...
+					// valor colocado para quando a sugestão vir com
+					// periodos só com 0 sem matricula, muito ruim...
+					mediaDoPeriodo=100;									   	
+					varia += (float) Math.pow( mediaDoPeriodo-2 ,2);
+					divisorPorPeriodo=0;
+					mediaDoPeriodo=0;
+				}			 		   
 				this.varianciaTotal=varia/this.tempoDeFormatura;
-			}
-			
-		}
-		
+			}	
+		}		
 	}
 	/**
 	 * calcula a variancia de nivel de dificuldade total setando a variavel variancia total
@@ -337,10 +341,9 @@ public class PreparacaoDoProblema {
 	 */
 	public void varianciaDeQtdDeDiscPorPeriodo(){
 		int cont=0;
-		float varia=0;
-		float media=0;
 		int totalDeDisc=0;
-		List <Float> listaLocalVariaqtdDisc=new ArrayList();
+		float varia=0;
+		float media=0;		
 		for (int i=0; i<this.tempoDeFormatura*8;i++){
 			if (sugestaoMat[i]!=0){
 				totalDeDisc+=1;
@@ -355,15 +358,64 @@ public class PreparacaoDoProblema {
 			if (i%8==0 && i!=0){
 				if (cont!=0){
 					varia +=(float) Math.pow(cont-media, 2);
+					cont=0;
 				}else{
 					varia+=100;// caso o periodo não tenha disciplina
 				}			
 			}
-			//listaLocalVariaqtdDisc.add(varia);
 		}
 		
 		this.variaQtdDiscPorPeriodo=varia/tempoDeFormatura;
 	}
+	
+	/**
+	 * Aluno estagia e mora longe 1.
+	 * Aluno estagia e mora perto 2.
+	 * Aluno não estagia e mora perto 3.
+	 * Classe mede o tempo de estudo extra classe e seta a variavel tempoExtraClasse
+	 * com 1,2,3 da seguinte forma:
+	 * intervalo de estudo semanal 			categoria			qtdMaxDeDisciplinas
+	 * 	 	 0-10								1				        3  
+	 * 		11 -15								2				 Entre 4 e 5			
+	 * 		 +15								3				 Entre 5 e 6
+	 * 		obs: o algoritmo so alocará mais que 6 disciplonas por periodo se
+	 * o aluno não tiver tempo de curso para pagar menos que isso.  	
+	 * 
+	 */
+	
+	public void tempoDeEstudoExtraClasse(){
+		float varia=0, varia1=0,varia2=0;
+		int cont=0;
+		int tempo=this.aluno.getTempDispExtrCla();			
+				for (int i=0; i<this.tempoDeFormatura*8;i++){
+					if (sugestaoMat[i]!=0){
+						cont+=1;
+					}
+					if (i%8==0 && i!=0){
+						if (cont!=0){
+							varia +=(float) Math.pow(cont-3, 2);
+							varia1+=(float) Math.pow(cont-4.5, 2);
+							varia2+=(float) Math.pow(cont-5.5, 2);
+							cont=0;
+						}else{
+							varia+=100;// caso o periodo não tenha disciplina
+						}			
+					}
+				}				
+				if (tempo<=10){
+					this.tempoExtraClasse=varia/this.tempoDeFormatura;
+				} else if(tempo>10 &&tempo<=15){
+					this.tempoExtraClasse=varia1/this.tempoDeFormatura;
+				} else if (tempo>15){
+					this.tempoExtraClasse=varia2/this.tempoDeFormatura;
+				}
+				
+			}
+			
+			
+		
+	
+	
 	
 /**
  * getters and  any setters 	
@@ -443,6 +495,13 @@ public class PreparacaoDoProblema {
 
 	public float getVerificaAcompanhada() {
 		return verificaAcompanhada;
+	}
+	
+	
+
+
+	public float getTempoExtraClasse() {
+		return tempoExtraClasse;
 	}
 
 
