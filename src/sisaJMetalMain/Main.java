@@ -8,27 +8,16 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.ErrorRatio;
-import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.Hypervolume;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicator.impl.R2;
-import org.uma.jmetal.qualityindicator.impl.Spread;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
-import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import sisaJmetalbeans.Aluno;
@@ -46,33 +35,36 @@ public class Main {
 		PreparacaoDoProblema preparacao =new PreparacaoDoProblema(aluno);
 		problem = new MatriculaMetalProblem(preparacao);
 		
-		double crossoverProbability = 1.0;
-		//jorge como fazer este crossover
-		crossover = new SBXCrossover(crossoverProbability);// tem que usar
-		//jorge perguntar a danilo se não é problem.getNumberOfVariables()+1 por causa da disciplina 0
-
-		double mutationProbability = 1.0 / problem.getNumberOfVariables();
-		//jorge
-		// essa classe OpticalNetworkMutation faz a mutação do cromossomo?
-		// quem é que force o pripeiro ou os primeiros cromossomos a ela?
-		// 
-		mutation = new OpticalNetworkMutation(mutationProbability);// vai substituir
-
-		selection = new BinaryTournamentSelection<IntegerSolution>();
-
+		//****************************
+		double crossoverProbability = 1.0 ;
+	    double crossoverDistributionIndex = 20.0;
+	    crossover = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+	    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+	    double mutationDistributionIndex = 20.0 ;
+	    mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+	    selection = new BinaryTournamentSelection<IntegerSolution>() ;
+		
+		//***************************
+	
 		algorithm = new NSGAIIIBuilder<>(problem).setCrossoverOperator(crossover).setMutationOperator(mutation)
-				.setSelectionOperator(selection).setPopulationSize(100).setMaxIterations(5000).build();
+				.setSelectionOperator(selection).setPopulationSize(1000).setMaxIterations(5000).build();
 		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
+//		algorithm = new NSGAIIBuilder<>(problem, crossover, mutation)
+//				.setSelectionOperator(selection).setPopulationSize(1000).setMaxEvaluations(5000).build();
+//		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+
+		
+		
 		List<IntegerSolution> population = algorithm.getResult();
 		long computingTime = algorithmRunner.getComputingTime();
 
 		JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
 		printFinalSolutionSet(population);
-		if (!referenceParetoFront.equals("")) {
-			printQualityIndicators(population, referenceParetoFront);
-		}
+//		if (!referenceParetoFront.equals("")) {
+//			printQualityIndicators(population, referenceParetoFront);
+//		}
 	}
 
 	/**
@@ -82,7 +74,7 @@ public class Main {
 	 */
 	public static void printFinalSolutionSet(List<? extends Solution<?>> population) {
 
-		new SolutionSetOutput.Printer(population).setSeparator("\t")
+		new SolutionListOutput(population).setSeparator("\t")
 				.setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
 				.setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv")).print();
 
@@ -98,64 +90,67 @@ public class Main {
 	 * @param paretoFrontFile
 	 * @throws FileNotFoundException
 	 */
-	public static void printQualityIndicators(List<? extends Solution<?>> population, String paretoFrontFile)
-			throws FileNotFoundException {
-		//jorge e esse paretofrontfile, o que é de onde vem e eu vou precisar dele?
-		Front referenceFront = new ArrayFront(paretoFrontFile);
-		FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
-
-		Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
-		Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population));
-		List<DoubleSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
-
-		String outputString = "\n";
-		outputString += "Hypervolume (N) : "
-				+ new Hypervolume<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation)
-				+ "\n";
-		outputString += "Hypervolume     : "
-				+ new Hypervolume<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-		outputString += "Epsilon (N)     : "
-				+ new Epsilon<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation)
-				+ "\n";
-		outputString += "Epsilon         : "
-				+ new Epsilon<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-		outputString += "GD (N)          : "
-				+ new GenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront)
-						.evaluate(normalizedPopulation)
-				+ "\n";
-		outputString += "GD              : "
-				+ new GenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-		outputString += "IGD (N)         : "
-				+ new InvertedGenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront)
-						.evaluate(normalizedPopulation)
-				+ "\n";
-		outputString += "IGD             : "
-				+ new InvertedGenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population)
-				+ "\n";
-		outputString += "IGD+ (N)        : "
-				+ new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(normalizedReferenceFront)
-						.evaluate(normalizedPopulation)
-				+ "\n";
-		outputString += "IGD+            : "
-				+ new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(referenceFront).evaluate(population)
-				+ "\n";
-		outputString += "Spread (N)      : "
-				+ new Spread<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation)
-				+ "\n";
-		outputString += "Spread          : "
-				+ new Spread<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-		try {
-			outputString += "R2 (N)          : "
-					+ new R2<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-			outputString += "R2              : "
-					+ new R2<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		outputString += "Error ratio     : "
-				+ new ErrorRatio<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-
-		JMetalLogger.logger.info(outputString);
-	}
+	
+	
+	
+//	public static void printQualityIndicators(List<? extends Solution<?>> population, String paretoFrontFile)
+//			throws FileNotFoundException {
+//		//jorge e esse paretofrontfile, o que é de onde vem e eu vou precisar dele?
+//		Front referenceFront = new ArrayFront(paretoFrontFile);
+//		FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
+//
+//		Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
+//		Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population));
+//		List<DoubleSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
+//
+//		String outputString = "\n";
+//		outputString += "Hypervolume (N) : "
+//				+ new Hypervolume<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation)
+//				+ "\n";
+//		outputString += "Hypervolume     : "
+//				+ new Hypervolume<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+//		outputString += "Epsilon (N)     : "
+//				+ new Epsilon<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation)
+//				+ "\n";
+//		outputString += "Epsilon         : "
+//				+ new Epsilon<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+//		outputString += "GD (N)          : "
+//				+ new GenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront)
+//						.evaluate(normalizedPopulation)
+//				+ "\n";
+//		outputString += "GD              : "
+//				+ new GenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+//		outputString += "IGD (N)         : "
+//				+ new InvertedGenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront)
+//						.evaluate(normalizedPopulation)
+//				+ "\n";
+//		outputString += "IGD             : "
+//				+ new InvertedGenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population)
+//				+ "\n";
+//		outputString += "IGD+ (N)        : "
+//				+ new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(normalizedReferenceFront)
+//						.evaluate(normalizedPopulation)
+//				+ "\n";
+//		outputString += "IGD+            : "
+//				+ new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(referenceFront).evaluate(population)
+//				+ "\n";
+//		outputString += "Spread (N)      : "
+//				+ new Spread<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation)
+//				+ "\n";
+//		outputString += "Spread          : "
+//				+ new Spread<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+//		try {
+//			outputString += "R2 (N)          : "
+//					+ new R2<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+//			outputString += "R2              : "
+//					+ new R2<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		outputString += "Error ratio     : "
+//				+ new ErrorRatio<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+//
+//		JMetalLogger.logger.info(outputString);
+//	}
 }

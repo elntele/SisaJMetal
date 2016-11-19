@@ -150,7 +150,7 @@ public class PreparacaoDoProblema {
 	 */
 	public float RetornaGrauDificuldadeDaDisc(int id){
 		Disciplina R=null;
-		for (Disciplina D:this.getNaoPagas()){
+		for (Disciplina D:this.disciplinas){
 			if (D.getId()==id){
 				R=D;
 				break;
@@ -170,7 +170,7 @@ public class PreparacaoDoProblema {
 	public int RetornaArea(int id){
 		Disciplina R=null;
 		int retorno=0;
-		for (Disciplina D:disciplinas){
+		for (Disciplina D:this.naoPagas){
 			if (D.getId()==id){
 				R=D;
 				break;
@@ -503,38 +503,43 @@ public class PreparacaoDoProblema {
 	public float getTempoExtraClasse() {
 		return tempoExtraClasse;
 	}
+/**
+ * contrutor para testeComPrint
+ * @param aluno
+ */
 
+//	public PreparacaoDoProblema(Aluno aluno) {
+//		super();
+//		this.aluno = aluno;
+//		montaListaDisciplinasPagas();
+//		montaListaDisciplinasReprovadas();
+//		montaNaoPagas();
+//		montaAredePreferencia();
+//		montaQtdDiscplinasParaConcluir();
+//		tempoDeFimDecurso ();
+//		montasugestao();
+//		contaTempoDeFormatura();
+//		tempoDeEstudoExtraClasse();
+//		varianciaTotal();
+//		varianciaDeQtdDeDiscPorPeriodo();
+//		verificaAcompNoPrimeDasug();
+//		qtdDeDisciplinasForaDeMinhaArea();				
+//	}
+	
+/**
+ * contrutor para o jmetal	
+ */
 
 	public PreparacaoDoProblema(Aluno aluno) {
 		super();
 		this.aluno = aluno;
-		tempoDeFimDecurso ();
 		montaListaDisciplinasPagas();
 		montaListaDisciplinasReprovadas();
-		montaQtdDiscplinasParaConcluir();
 		montaNaoPagas();
 		montaAredePreferencia();
-		montasugestao();
-	}
-	
-	
-
-	public PreparacaoDoProblema(Aluno aluno, int[] vetor) {
-		super();
-		this.aluno = aluno;
+		montaQtdDiscplinasParaConcluir();
 		tempoDeFimDecurso ();
-		montaListaDisciplinasPagas();
-		montaListaDisciplinasReprovadas();
-		montaQtdDiscplinasParaConcluir();
-		montaNaoPagas();
-		montaAredePreferencia();
-		contaTempoDeFormatura();
-		//varianciaPeriodo();
-		varianciaTotal();
-		verificaAcompNoPrimeDasug();
-		qtdDeDisciplinasForaDeMinhaArea();
-		verificaAcompNoPrimeDasug();
-		this.sugestaoMat=vetor;	
+			
 	}
 
 	

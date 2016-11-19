@@ -20,13 +20,14 @@ public class TesteComPrint {
 		 List<Disciplina> disciplinas = problema.getDisciplinas();
 		 MatriculaMetalProblem matriculaMetal = new MatriculaMetalProblem(problema); 
 		
-		 int l=1;
-		 for (float V:matriculaMetal.getVarianciaDoPeriodo()){
-		 System.out.println("variancia do periodo "+l+": "+V);
-		 l+=1;
-		 }
-		 System.out.println("Variancia Total: "+matriculaMetal.getVarianciaTotal());
-		 
+//		 int l=1;
+//		 for (float V:matriculaMetal.getVarianciaDoPeriodo()){
+//		 System.out.println("variancia do periodo "+l+": "+V);
+//		 l+=1;
+//		 }
+		 System.out.println("Variancia Total: "+problema.getVarianciaTotal());
+		 System.out.println("variancia de quantidade de disciplina por periodo: "+problema.getVariaQtdDiscPorPeriodo());
+		 System.out.println("discordancia da oferta com meu tempo extra classe: "+problema.getTempoExtraClasse());
 		 System.out.println("numero de periodos restantes : "+problema.getPeriodosRestantes());
 		 System.out.println("quantidade de disciplinas para concluir nº: "+problema.getQtdDiscplinasParaConcluir());
 		 
@@ -51,7 +52,7 @@ public class TesteComPrint {
 		  */
 		 
 		 for (Disciplina D:problema.getNaoPagas()){
-			 System.out.println("da lista de diciplina não pagas id nº : "+D.getId());
+			 System.out.println("Lista de diciplina não pagas id nº : "+D.getId());
 		 }
 		 
 		 
@@ -60,13 +61,19 @@ public class TesteComPrint {
 		 
 		 
 
-		 System.out.println(problema.getSugestaoMat().length);
+		 System.out.println("tamanho da sugestão: "+problema.getSugestaoMat().length);
 		 
 		for (int i=0; i<problema.getSugestaoMat().length;i++){
 			System.out.println("disciplina id "+ problema.getSugestaoMat()[i]);
 		}
 		
-		System.out.println("Se formou em: "+matriculaMetal.getTempoDeFormatura()+" periodos");
+		System.out.println("Se formou em: "+problema.getTempoDeFormatura()+" periodos");
+		
+		System.out.println("grau de participação das minhas acompanhadas no primeiro periodo: "+
+		problema.getVerificaAcompanhada());
+		
+		System.out.println("quantidade de disciplina fora da mainha area (quanto menor melhor): "+
+		problema.getQtdDiscForaDaMinhaArea());
 
 		
 		
