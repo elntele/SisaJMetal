@@ -6,5 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-algorithm"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-problem"/>
+	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/JMetalSisa2/SisaJMetal/postgresql-9.4.1211.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

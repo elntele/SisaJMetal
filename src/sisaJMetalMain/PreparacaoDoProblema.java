@@ -176,7 +176,7 @@ public class PreparacaoDoProblema {
 				break;
 			}
 		}
-		
+	if (R!=null){	
 		switch (R.getArea().getNome()){
 		 case "ARQ": retorno=1;
 		 			break;
@@ -184,9 +184,11 @@ public class PreparacaoDoProblema {
 			break;
 		 case "FC":  retorno=3;
 			break;
+		
 		 default: break;
 
 		 }
+	}
 
 		return  retorno;
 	}
@@ -508,28 +510,6 @@ public class PreparacaoDoProblema {
  * @param aluno
  */
 
-//	public PreparacaoDoProblema(Aluno aluno) {
-//		super();
-//		this.aluno = aluno;
-//		montaListaDisciplinasPagas();
-//		montaListaDisciplinasReprovadas();
-//		montaNaoPagas();
-//		montaAredePreferencia();
-//		montaQtdDiscplinasParaConcluir();
-//		tempoDeFimDecurso ();
-//		montasugestao();
-//		contaTempoDeFormatura();
-//		tempoDeEstudoExtraClasse();
-//		varianciaTotal();
-//		varianciaDeQtdDeDiscPorPeriodo();
-//		verificaAcompNoPrimeDasug();
-//		qtdDeDisciplinasForaDeMinhaArea();				
-//	}
-	
-/**
- * contrutor para o jmetal	
- */
-
 	public PreparacaoDoProblema(Aluno aluno) {
 		super();
 		this.aluno = aluno;
@@ -539,8 +519,30 @@ public class PreparacaoDoProblema {
 		montaAredePreferencia();
 		montaQtdDiscplinasParaConcluir();
 		tempoDeFimDecurso ();
-			
+		montasugestao();
+		contaTempoDeFormatura();
+		tempoDeEstudoExtraClasse();
+		varianciaTotal();
+		varianciaDeQtdDeDiscPorPeriodo();
+		verificaAcompNoPrimeDasug();
+		qtdDeDisciplinasForaDeMinhaArea();				
 	}
+	
+/**
+ * contrutor para o jmetal	
+ */
+
+//	public PreparacaoDoProblema(Aluno aluno) {
+//		super();
+//		this.aluno = aluno;
+//		montaListaDisciplinasPagas();
+//		montaListaDisciplinasReprovadas();
+//		montaNaoPagas();
+//		montaAredePreferencia();
+//		montaQtdDiscplinasParaConcluir();
+//		tempoDeFimDecurso ();
+//			
+//	}
 
 	
 }

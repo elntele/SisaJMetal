@@ -8,7 +8,7 @@ public class ConexaoPostgresql {
 	
 			private static String usuario="postgres";
 		    private static String senha="postgres";
-		    private static String banco="sisadisciplinas";
+		    private static String banco="sisa";
 		    private static String ip="localhost";
 		    private static String driver="org.postgresql.Driver";
 		    private static Connection conexao = null;

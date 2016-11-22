@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2016-11-19T14:05:47</date>
-  <millis>1479571547565</millis>
+  <date>2016-11-21T22:54:57</date>
+  <millis>1479776097466</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,8 +13,8 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2016-11-19T14:05:47</date>
-  <millis>1479571547613</millis>
+  <date>2016-11-21T22:54:57</date>
+  <millis>1479776097486</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -24,30 +24,30 @@
   <message>rpssize: 1820</message>
 </record>
 <record>
-  <date>2016-11-19T14:05:48</date>
-  <millis>1479571548350</millis>
+  <date>2016-11-21T22:54:59</date>
+  <millis>1479776099112</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>sisaJMetalMain.Main</class>
   <method>main</method>
   <thread>1</thread>
-  <message>Total execution time: 340ms</message>
+  <message>Total execution time: 1055ms</message>
 </record>
 <record>
-  <date>2016-11-19T14:05:48</date>
-  <millis>1479571548381</millis>
+  <date>2016-11-21T22:54:59</date>
+  <millis>1479776099127</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>sisaJMetalMain.Main</class>
   <method>printFinalSolutionSet</method>
   <thread>1</thread>
-  <message>Random seed: 1479571547500</message>
+  <message>Random seed: 1479776097411</message>
 </record>
 <record>
-  <date>2016-11-19T14:05:48</date>
-  <millis>1479571548383</millis>
+  <date>2016-11-21T22:54:59</date>
+  <millis>1479776099129</millis>
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -57,8 +57,8 @@
   <message>Objectives values have been written to file FUN.tsv</message>
 </record>
 <record>
-  <date>2016-11-19T14:05:48</date>
-  <millis>1479571548384</millis>
+  <date>2016-11-21T22:54:59</date>
+  <millis>1479776099130</millis>
   <sequence>5</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>

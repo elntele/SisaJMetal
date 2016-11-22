@@ -24,10 +24,10 @@ public class DisciplinaDAO {
  */		
 	public List<Disciplina> getDisciplinas(){
 		
-		//Connection conexao = ConexaoPostgresql.getConnection();
+		Connection con = ConexaoPostgresql.getConnection();
 		
 		//Conexão para o Mysql - Jorge
-		Connection con = Conexao.getConnection();
+		//Connection con = Conexao.getConnection();
 		
 		try {
 			
@@ -37,6 +37,32 @@ public class DisciplinaDAO {
 			ResultSet rs = pstmt.executeQuery();
 			String[] diaHora= new String[5];
 			while (rs.next()) {
+//				/**
+//				 *para msql 
+//				 */
+//				Disciplina disciplinaTemporaria = new Disciplina();
+//				Area areaTemporaria = new Area();
+//				disciplinaTemporaria.setPeriodo(rs.getString("periodo"));
+//				disciplinaTemporaria.setId(rs.getInt("id"));
+//				disciplinaTemporaria.setCodigo(rs.getInt("código"));
+//				disciplinaTemporaria.setNome(rs.getString("nome"));
+//				areaTemporaria.setNome(rs.getString("Área"));
+//				disciplinaTemporaria.setArea(areaTemporaria);
+//				disciplinaTemporaria.setPreRequisitos(rs.getString("Pré-requisitos"));
+//				disciplinaTemporaria.setSemestre(rs.getInt("semestre"));
+//				disciplinaTemporaria.setMédiageral(rs.getString("média geral"));
+//				disciplinaTemporaria.setGrauDificuldade(rs.getString("dificudade"));
+//				diaHora[0]=rs.getString("segunda");
+//				diaHora[1]=rs.getString("terça");
+//				diaHora[2]=rs.getString("quarta");
+//				diaHora[3]=rs.getString("quinta");
+//				diaHora[4]=rs.getString("sexta");
+//				disciplinaTemporaria.setDiaHora(diaHora);
+//				disciplinas.add(disciplinaTemporaria);
+				
+				/**
+				 * para postgrees
+				 */
 				Disciplina disciplinaTemporaria = new Disciplina();
 				Area areaTemporaria = new Area();
 				disciplinaTemporaria.setPeriodo(rs.getString("periodo"));
@@ -45,9 +71,9 @@ public class DisciplinaDAO {
 				disciplinaTemporaria.setNome(rs.getString("nome"));
 				areaTemporaria.setNome(rs.getString("Área"));
 				disciplinaTemporaria.setArea(areaTemporaria);
-				disciplinaTemporaria.setPreRequisitos(rs.getString("Pré-requisitos"));
+				disciplinaTemporaria.setPreRequisitos(rs.getString("prérequisitos"));
 				disciplinaTemporaria.setSemestre(rs.getInt("semestre"));
-				disciplinaTemporaria.setMédiageral(rs.getString("média geral"));
+				disciplinaTemporaria.setMédiageral(rs.getString("médiageral"));
 				disciplinaTemporaria.setGrauDificuldade(rs.getString("dificudade"));
 				diaHora[0]=rs.getString("segunda");
 				diaHora[1]=rs.getString("terça");
@@ -56,6 +82,8 @@ public class DisciplinaDAO {
 				diaHora[4]=rs.getString("sexta");
 				disciplinaTemporaria.setDiaHora(diaHora);
 				disciplinas.add(disciplinaTemporaria);
+
+				
 				
 			}
 			rs.close();

@@ -31,11 +31,14 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		copia.addAll(problemaPreparado.getNaoPagas());
 		Random gerador = new Random();		 
         double numero; 
+  ///      int modulo8=0;
+//        int contaCadeira=0;
         int lugarPraZero=tamanhoDaSugestao-temQuePagar;
 		for (int i=0;i<tamanhoDaSugestao;i++){
 			numero=gerador.nextDouble()*100;
 			int indexDeCopia;
-			if (numero<=37.5&&lugarPraZero!=0){	
+			//if (modulo8>=4&&contaCadeira<3)continue;
+			if (numero<=37.5&&lugarPraZero!=0){
 				retorno.setVariableValue(i, 0);
 				lugarPraZero-=1;
 				}else if (copia.size()!=0&&temQuePagar!=0){
@@ -43,18 +46,28 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 					retorno.setVariableValue(i, copia.get(indexDeCopia).getId());
 					copia.remove(indexDeCopia);
 					temQuePagar-=1;
+				//	contaCadeira+=1;
 					}else if (lugarPraZero!=0){
 							retorno.setVariableValue(i, 0);
 							lugarPraZero-=1;
 							}else{
 								continue;
 							}
+//			modulo8+=1; // jorge	
 				}
-		
-	
+//		int l=0;
+//	
+//		for (int i=0; i<retorno.getNumberOfVariables();i++){
+//			if (retorno.getVariableValue(i)!=0) l+=1;
+//		}
+//		while (l%8!=0)l+=1;
+//		for (int k=0;k<l;k++){
+//			
+//		}
+//	
 		return retorno;
 	}
-	
+
 	int contador=0;
 	@Override
 	/**
@@ -76,24 +89,24 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		for (int i = 0; i < vars.length; i++) {
 			vars[i] = solution.getVariableValue(i);
 			
-//			if (i%8==0 && i!=0){
-//			
-//				System.out.println(impr);
-//					impr.clear();			
-//			}
-//			impr.add(solution.getVariableValue(i));
-//			if (i%79==0 && i!=0){
+			if (i%8==0 && i!=0){
+			
+				System.out.println(impr);
+					impr.clear();			
+			}
+			impr.add(solution.getVariableValue(i));
+			if (i%79==0 && i!=0){
 //				System.out.println(impr);
 //				System.out.println(problemaPreparado.getTempoDeFormatura());
 //				System.out.println(problemaPreparado.getVarianciaTotal());
 //				System.out.println(problemaPreparado.getQtdDiscForaDaMinhaArea());
 //				System.out.println(problemaPreparado.getVariaQtdDiscPorPeriodo());
 //				System.out.println(problemaPreparado.getTempoExtraClasse());
-//				System.out.println("**************************************"
-//						+ "*********************************");
-//				contador+=1;
-//				System.out.println(contador);
-//			}
+				System.out.println("**************************************"
+						+ "*********************************");
+				contador+=1;
+				System.out.println(contador);
+			}
 						
 		}
 		problemaPreparado.setSugestaoMat(vars);

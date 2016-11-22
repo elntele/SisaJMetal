@@ -45,13 +45,13 @@ public class Main {
 	    selection = new BinaryTournamentSelection<IntegerSolution>() ;
 		
 		//***************************
-	
+//	
 		algorithm = new NSGAIIIBuilder<>(problem).setCrossoverOperator(crossover).setMutationOperator(mutation)
-				.setSelectionOperator(selection).setPopulationSize(1000).setMaxIterations(5000).build();
+				.setSelectionOperator(selection).setPopulationSize(1).setMaxIterations(1).build();
 		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
 //		algorithm = new NSGAIIBuilder<>(problem, crossover, mutation)
-//				.setSelectionOperator(selection).setPopulationSize(1000).setMaxEvaluations(5000).build();
+//				.setSelectionOperator(selection).setPopulationSize(1000).setMaxEvaluations(1000).build();
 //		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
 		
