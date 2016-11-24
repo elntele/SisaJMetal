@@ -31,7 +31,8 @@ public class Main {
 		SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
 		String referenceParetoFront = "";
 		
-		Aluno aluno = new Aluno("abc", "123", false, "a@a", 2013, 1, 9, "FC", 0, 300);
+		
+		Aluno aluno = new Aluno("abc", "123", false, "a@a", 2013, 1, 20, "FC", 0, 300);
 		PreparacaoDoProblema preparacao =new PreparacaoDoProblema(aluno);
 		problem = new MatriculaMetalProblem(preparacao);
 		
@@ -60,7 +61,7 @@ public class Main {
 		long computingTime = algorithmRunner.getComputingTime();
 
 		JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-
+		PosProcessamento pos=new PosProcessamento(population,preparacao);
 		printFinalSolutionSet(population);
 //		if (!referenceParetoFront.equals("")) {
 //			printQualityIndicators(population, referenceParetoFront);
