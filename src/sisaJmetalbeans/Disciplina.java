@@ -138,7 +138,7 @@ public class Disciplina {
 	}
 
 	public void setPreRequisitos(String pre) {
-		String[] parts = pre.split (";");
+		String[] parts = pre.split ("-");
 		int buffer;
 		if (!pre.equals("")){
 		for (int i=0;i< parts.length;i++){	

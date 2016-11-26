@@ -26,6 +26,16 @@ public class PreparacaoDoProblema {
 	private float verificaAcompanhada;
 	private float tempoExtraClasse;
 	
+//	public void testaDiahora(){
+//		for (Disciplina D:this.disciplinas){
+//			
+//			System.out.println( D.getNome()+"[segundas "+D.getDiaHora()[0]+"terças "+D.getDiaHora()[1]+"quartas"
+//			+D.getDiaHora()[2]+"quintas "+D.getDiaHora()[3]+"sextas"+D.getDiaHora()[4]+"]");
+//	
+//			System.out.println("["+D.getDiaHora()[0]+" "+ ""+" "+D.getDiaHora()[1]+" "+ ""+D.getDiaHora()[2]+""
+//				+ " "+ ""+D.getDiaHora()[3]+" "+ ""+D.getDiaHora()[4]+"]");
+//		}
+//	}
 		
 	/**
 	 *  seta a variavel periodosRestantes com o tempo que o aluno 
@@ -525,7 +535,8 @@ public class PreparacaoDoProblema {
 		varianciaTotal();
 		varianciaDeQtdDeDiscPorPeriodo();
 		verificaAcompNoPrimeDasug();
-		qtdDeDisciplinasForaDeMinhaArea();				
+		qtdDeDisciplinasForaDeMinhaArea();
+//		testaDiahora();
 	}
 	
 /**

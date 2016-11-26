@@ -35,7 +35,7 @@ public class DisciplinaDAO {
 			String sql = "SELECT * FROM disciplinas";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			String[] diaHora= new String[5];
+			//String[] diaHora=new String[5];
 			while (rs.next()) {
 //				/**
 //				 *para msql 
@@ -63,7 +63,13 @@ public class DisciplinaDAO {
 				/**
 				 * para postgrees
 				 */
+				try {
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 				Disciplina disciplinaTemporaria = new Disciplina();
+				String[] diaHora=new String[5];
 				Area areaTemporaria = new Area();
 				disciplinaTemporaria.setPeriodo(rs.getString("periodo"));
 				disciplinaTemporaria.setId(rs.getInt("id"));
@@ -80,7 +86,14 @@ public class DisciplinaDAO {
 				diaHora[2]=rs.getString("quarta");
 				diaHora[3]=rs.getString("quinta");
 				diaHora[4]=rs.getString("sexta");
+//				System.out.println( rs.getString("nome")+"[segundas "+diaHora[0]+"terças "+diaHora[1]+"quartas"
+//				+diaHora[2]+"quintas "+diaHora[3]+"sextas"+diaHora[4]+"]");
 				disciplinaTemporaria.setDiaHora(diaHora);
+//				System.out.println( disciplinaTemporaria.getNome()+"[segundas "+disciplinaTemporaria.getDiaHora()[0]+
+//						"terças "+disciplinaTemporaria.getDiaHora()[1]+"quartas"
+//						+disciplinaTemporaria.getDiaHora()[2]+"quintas "
+//						+disciplinaTemporaria.getDiaHora()[3]+
+//						"sextas"+disciplinaTemporaria.getDiaHora()[4]+"]");				
 				disciplinas.add(disciplinaTemporaria);
 
 				
@@ -88,6 +101,14 @@ public class DisciplinaDAO {
 			}
 			rs.close();
 			pstmt.close();
+//			for (Disciplina D:disciplinas){
+//				
+//				System.out.println( D.getNome()+"[segundas "+D.getDiaHora()[0]+"terças "+D.getDiaHora()[1]+"quartas"
+//				+D.getDiaHora()[2]+"quintas "+D.getDiaHora()[3]+"sextas"+D.getDiaHora()[4]+"]");
+//		
+//				System.out.println("["+D.getDiaHora()[0]+" "+ ""+" "+D.getDiaHora()[1]+" "+ ""+D.getDiaHora()[2]+""
+//					+ " "+ ""+D.getDiaHora()[3]+" "+ ""+D.getDiaHora()[4]+"]");
+//			}
 			return disciplinas;
 		} catch (SQLException e) {
 			// TODO: handle exception
