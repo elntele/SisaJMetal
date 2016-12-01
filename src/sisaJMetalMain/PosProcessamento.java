@@ -22,39 +22,6 @@ for (Disciplina D : this.Disciplinas ) {
    this.disciplinaMap.put(Integer.toString(D.getId()), D);
 	System.out.println("["+D.getDiaHora()[0]+" "+ ""+" "+D.getDiaHora()[1]+" "+ ""+D.getDiaHora()[2]+""
 											+ " "+ ""+D.getDiaHora()[3]+" "+ ""+D.getDiaHora()[4]+"]");
-   
-//   	System.out.println("["+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[0]+" "
-//   			+ ""+" "+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[1]+" "
-//   					+ ""+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[2]+" "
-//   							+ ""+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[3]+" "
-//   									+ ""+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[4]+"]");
-	
-//   if (!this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[0].equals("")){
-//	   System.out.println("valor de 0: "+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[0]);
-//   }else{
-//	   System.out.println("horario 0 vario");
-//   }
-//   if (!this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[1].equals("")){
-//	   System.out.println("valor de 1: "+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[1]);
-//   }else{
-//	   System.out.println("horario 1 vario");
-//   }
-//   if (!this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[2].equals("")){
-//	   System.out.println("valor de 2: "+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[2]);
-//   }else{
-//	   System.out.println("horario 2 vario");
-//   }
-//   if (!this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[3].equals("")){
-//	   System.out.println("valor de 3: "+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[3]);
-//   }else{
-//	   System.out.println("horário vario");
-//   }
-//   if (!this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[4].equals("")){
-//	   System.out.println("valor de 4:"+this.disciplinaMap.get(Integer.toString(D.getId())).getDiaHora()[4]);
-//   }else{
-//	   System.out.println("horario vario");
-//   }
-//   
 	}
 }
 
@@ -112,6 +79,7 @@ for (Disciplina D : this.Disciplinas ) {
 						encontrou=true;
 						break;
 					}
+			
 				}
 				if (!encontrou){
 				copia.remove(S);
@@ -148,25 +116,6 @@ for (Disciplina D : this.Disciplinas ) {
 								horario2=this.disciplinaMap.get(L[modulo8]).getDiaHora();
 								 for (int k=0;k<5;k++){
 									 
-//								    if (!horario1[k].equals("")){
-//								    	switch (k) {
-//										case 0: System.out.println("segunda");											
-//											break;											
-//										case 1: System.out.println("terça");										
-//											break;
-//										case 2: System.out.println("quarta");										
-//											break;
-//										case 4: System.out.println("quinta");
-//											break;
-//										case 5: System.out.println("sexta");
-//											break;
-//										default:
-//											break;
-//										}
-//								    	System.out.println("horario1: "+ horario1[k]);
-//								    	}
-								    
-								    //if (!horario1[k].equals(""))System.out.println("horario2: "+ horario2[k]);
 										if ((horario1[k].equals(horario2[k]))&&(!horario1[k].equals(""))&&(!horario2[k].equals(""))){
 											chocouHorario =true;
 											switch (k) {
@@ -211,6 +160,9 @@ for (Disciplina D : this.Disciplinas ) {
 		
 		this.solution=copia;
 		System.out.println("{método verifica choque de horario}tamanho final de solution: "+solution.size());
+		for (int x=0; x<this.solution.size();x++){
+			System.out.println(this.solution.get(x));
+		}
 
 		
 	}

@@ -116,6 +116,7 @@ public class PreparacaoDoProblema {
 			presenca=false;
 		}
 		this.naoPagas=faltaPagar;
+		//System.out.println("não pagas aqui da preparacao"+this.naoPagas);
 	}
 	
 	/**
