@@ -2,6 +2,7 @@ package sisaJMetalMain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -9,8 +10,6 @@ import java.util.Random;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.impl.DefaultIntegerSolution;
-
-import com.mysql.fabric.xmlrpc.base.Array;
 
 import sisaJmetalbeans.Disciplina;
 
@@ -75,23 +74,22 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 	
 	public List<String> achaFatia (int i, String []L){
 		List<String> Ret = new ArrayList<>();
-		//String[] Ret= new  String[8];
-		//int[] fatia=new int[(10)+1];
 		int indiceIni=i;
-		int indiceFim=i;
+//		int indiceFim=i;
 		for (int k=i;k<100;k++){
 			if (indiceIni%8!=0 &&indiceIni!=0 ){
 				indiceIni-=1;
 			}
-			if (indiceFim==0){
-				indiceFim+=1;
-				}else if(indiceFim%8!=0){
-					indiceFim+=1;
-				}
-			if (indiceIni%8==0&&indiceFim%8==0) break;
+//			if (indiceFim==0){
+//				indiceFim+=1;
+//				}else if(indiceFim%8!=0){
+//					indiceFim+=1;
+//				}
+			//if (indiceIni%8==0&&indiceFim%8==0) break;
+			if (indiceIni%8==0) break;
 		}
-		int indice=0;
-		for (int w=indiceIni;w<indiceFim;w++){
+//		int indice=0;
+		for (int w=indiceIni;w<i;w++){
 			Ret.add(L[w]);
 		}
 		
@@ -100,17 +98,18 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 	
 	public boolean verificaSeJaexiste(IntegerSolution sol, int id, int i){
 		boolean retornando=false;
-		String Buffer="";
-		Buffer=sol.toString();
+//		String Buffer="";
+//		Buffer=sol.toString();
 		//System.out.println("buffer "+Buffer);
-		String []L=Buffer.split(" ");
-		List <String> fatia=new ArrayList<>();
-		System.arraycopy(L, 1, L, 0, this.problemaPreparado.getPeriodosRestantes()*8);
-		fatia=achaFatia(i,L);
-		for (String S:fatia){
-			if (S.equals(Integer.toString(id))){
+//		String []L=Buffer.split(" ");
+//		List <String> fatia=new ArrayList<>();
+//		System.arraycopy(L, 1, L, 0, this.problemaPreparado.getPeriodosRestantes()*8);
+//		fatia=achaFatia(i,L);
+		//for (String S:fatia){
+			//if (S.equals(Integer.toString(id))){
+			if (sol.getVariableValue(i)==id){ // esse é que foi add
 				retornando=true;
-			}
+			//}
 		}
 		return retornando;
 	}
@@ -166,29 +165,24 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 				boolean retornado=false;
 				String Buffer="";
 				Buffer=sol.toString();
-				//int[] fatia;
 				System.out.println("buffer "+Buffer);
 				String []L=Buffer.split(" ");
 				List <String> fatia=new ArrayList<>();
-				
-				//System.out.println("tempo de formatora *8= " + this.problemaPreparado.getPeriodosRestantes()*8);
 				System.arraycopy(L, 1, L, 0, this.problemaPreparado.getPeriodosRestantes()*8);
-				fatia=achaFatia(i,L);
+				fatia=achaFatia(i,L);// de modulo 8 ate i
 				String[] horario1;
-				String [] horario2;				
+				String [] horario2;
+				//System.out.println("i="+i);
 				System.out.println(fatia);
+				System.out.println("id: "+id);
 				for (String S: fatia){
-					System.out.println("ponto 2");
 					if (!S.equals("0")){
-						System.out.println("ponto 3");
-						System.out.println("id: "+id);
 						horario1=this.disciplinaMap.get(Integer.parseInt(S)).getDiaHora();
 						horario2=this.disciplinaMap.get(id).getDiaHora();				
 						if (comparaDiahora(horario1, horario2)){
-							//System.out.println(this.disciplinaMap.get(Integer.parseInt(S)).getDiaHora());
-							//System.out.println(this.disciplinaMap.get(id).getDiaHora());
 							retornado =true;
-							System.out.println("ponto 4");
+							System.out.println("id disciplina1: "+S);
+							System.out.println("id disciplina2: "+id);
 							break;
 						}
 					}
@@ -198,21 +192,19 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 			}
 	
 	
-	public IntegerSolution removeDisciplinasJacursadasDaSugest(IntegerSolution sol,int tamanhoDaSugestao){
+	public IntegerSolution resetSugestao(IntegerSolution sol,int tamanhoDaSugestao){
 		boolean t=true;
 		List<Disciplina>copiaJaCursadas=new ArrayList<>();
-		copiaJaCursadas.addAll(this.problemaPreparado.getAluno().getDiscPagas());
-		//while(t)System.out.println(copiaJaCursadas);
-		for (Disciplina D:copiaJaCursadas){
-			for (int i=0;i<tamanhoDaSugestao;i++){
-				if (D.getId()==sol.getVariableValue(i)){
-					sol.setVariableValue(i, 0);
-					//while(t)System.out.println("troquei");
-				}
-			}
-			
-		}
-		//while(t)System.out.println(sol);
+		//copiaJaCursadas.addAll(this.problemaPreparado.getAluno().getDiscPagas());
+//		for (Disciplina D:copiaJaCursadas){
+//			for (int i=0;i<tamanhoDaSugestao;i++){
+//				if (D.getId()==sol.getVariableValue(i)){
+//					sol.setVariableValue(i, 0);
+//				}
+//			}
+//		}
+		for (int i=0;i<tamanhoDaSugestao;i++) sol.setVariableValue(i, 0);		
+//		while(t)System.out.println(sol);
 		return sol;
 	}
 	
@@ -223,6 +215,7 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		List<Disciplina> copia0=new ArrayList<>();
 		List<Disciplina> copia1=new ArrayList<>();
 		List<Disciplina> copia2=new ArrayList<>();
+		boolean falhou=false;
 		int tamanhoDaSugestao=problemaPreparado.getPeriodosRestantes()*8;
 		int temQuePagar=problemaPreparado.getQtdDiscplinasParaConcluir();
 		copia0.addAll(this.NaoPagas0);
@@ -236,131 +229,111 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
         int troca1=0; // guarda posição com zero antes do periodo final para uma possivel troca
         int troca2=0;// guarda posição com zero antes do periodo final para uma possivel troca
         int lugarPraZero=tamanhoDaSugestao-temQuePagar; //// guarda quantidade de posições que pode-se alocar 0
+        
         //Psc.: 0 significa que não há disciplinas na posição do array 
-        retorno=removeDisciplinasJacursadasDaSugest(retorno,tamanhoDaSugestao);
+//        retorno=resetSugestao(retorno,tamanhoDaSugestao);
+//        boolean T=true;
+//        while (T) System.out.println(temQuePagar+" "+lugarPraZero);
         for (int i=0;i<tamanhoDaSugestao;i++){
-			numero=gerador.nextDouble()*100;
+			if (temQuePagar!=0){
+        	numero=gerador.nextDouble()*100;
+			}else {
+				numero=10;
+					}
 			int indexDeCopia =0;//inteiro que guarda o randâmico entre 0 e o tamanho do arraylist de disciplinas não pagas 
 			
-			if (modulo8>=4&&contaCadeira<3){// se o contador modulo8 estiver entre a posição 5 e 8 
-				numero=38.00;				// e contador de disciplinas for menor que 3 ele força
-				}							// o alg. a colocar mais disciplinas no periodo	
-			
+//			if (modulo8>=4&&contaCadeira<3){// se o contador modulo8 estiver entre a posição 5 e 8 
+//				numero=38.00;				// e contador de disciplinas for menor que 3 ele força
+//				}							// o alg. a colocar mais disciplinas no periodo	
+//			
 			if (numero<=37.5&&lugarPraZero!=0){
-				if (i%2==0){
-					troca1=i;
-				}else {
-					troca2=i;
-				}
 				retorno.setVariableValue(i, 0);
 				lugarPraZero-=1;
-				
+				System.out.println("opa sortiei o 0");
 				} 
-				if ((copia0.size()!=0||copia1.size()!=0||copia2.size()!=0)&&temQuePagar!=0){
-				boolean verificaChoque=true;
-				numero=gerador.nextDouble()*100;
-				if (copia0.size()!=0&&numero>20){
-					int contador0=0;
-					while(verificaChoque&&numero>20){
-						indexDeCopia=gerador.nextInt(copia0.size());
-						if (verificaSeJaexiste(retorno, copia0.get(indexDeCopia).getId(),i)){
-							retorno=trocaPosicao(retorno, copia0.get(indexDeCopia).getId(),i);
-							break;
-						}
-						verificaChoque=choqueDeHorario(retorno, copia0.get(indexDeCopia).getId(),i);
-						System.out.println("ponto1-0");
-						contador0+=1;
-						if(contador0==20)break;
-					}
-					if(contador0==20){
-						numero=1;
-					}else {
-						retorno.setVariableValue(i, copia0.get(indexDeCopia).getId());
-						copia0.remove(indexDeCopia);
-						temQuePagar-=1;
-					}
-					
-
-				}
-				if (semestreDaVez==1&&copia1.size()!=0&&numero<=20){
-					int contador1=0;
-					while(verificaChoque){
-						indexDeCopia=gerador.nextInt(copia1.size());
-						if (verificaSeJaexiste(retorno, copia1.get(indexDeCopia).getId(),i)){
-							retorno=trocaPosicao(retorno, copia1.get(indexDeCopia).getId(),i);
-							break;
-						}
-						verificaChoque=choqueDeHorario(retorno, copia1.get(indexDeCopia).getId(),i);
-						System.out.println("ponto1-1");
-						contador1+=1;
-						if(contador1==20)break;
-					}
-					if(contador1==20){
-						retorno.setVariableValue(i, 0);
-						lugarPraZero-=1;
-					}else {
-						retorno.setVariableValue(i, copia1.get(indexDeCopia).getId());
-						copia1.remove(indexDeCopia);
-						temQuePagar-=1;
-					}
-
-				}
-					else if (semestreDaVez==2&&copia2.size()!=0&&numero<=20){
-						int contador2=0;
-						while(verificaChoque){
-							indexDeCopia=gerador.nextInt(copia2.size());
-							if (verificaSeJaexiste(retorno, copia2.get(indexDeCopia).getId(),i)){
-								retorno=trocaPosicao(retorno, copia2.get(indexDeCopia).getId(),i);
+				if ((copia0.size()!=0||copia1.size()!=0||copia2.size()!=0)&&temQuePagar!=0&&numero>37.5){
+					System.out.println("entrei i:="+i);
+					boolean verificaChoque=true;
+					double numero2=gerador.nextDouble()*100;
+					if (copia0.size()!=0&&numero2>20){
+						int contador0=copia0.size();
+						for(indexDeCopia=0;indexDeCopia<contador0;indexDeCopia++){
+							System.out.println("diciplinas obrigatórias todo periodo");
+							System.out.println("i="+i);
+							verificaChoque=choqueDeHorario(retorno, copia0.get(indexDeCopia).getId(),i);
+							if (!verificaChoque){
+								retorno.setVariableValue(i, copia0.get(indexDeCopia).getId());
+								System.out.println("não houve choque, coloquei o id: "+copia0.get(indexDeCopia).getId());
+								copia0.remove(indexDeCopia);
+								temQuePagar-=1;
+								System.out.println("tem que pagar: "+temQuePagar);
 								break;
 							}
-							verificaChoque=choqueDeHorario(retorno, copia2.get(indexDeCopia).getId(),i);							
-							System.out.println("ponto1-2");
-							contador2+=1;
-							if(contador2==20)break;
-						}
-						if(contador2==20){
-							retorno.setVariableValue(i, 0);
-							lugarPraZero-=1;
-						}else {
-							retorno.setVariableValue(i, copia2.get(indexDeCopia).getId());
-							copia2.remove(indexDeCopia);
-							temQuePagar-=1;
 						}
 					}
-						
-					if(modulo8%8!=0){// aqui ver se modulo 8 entra quando é igual a 0
-						contaCadeira+=1;
-						}else {
-								contaCadeira=0;
-								modulo8=0;
-								if(semestreDaVez==1){
-									if ((copia1.size())==2){
-										retorno.setVariableValue(troca1, copia1.get(0).getId());
-										retorno.setVariableValue(troca2, copia1.get(1).getId());
-											}
-									if(copia1.size()==1)retorno.setVariableValue(troca2, copia1.get(1).getId());
-								}else{
-									if ((copia2.size())==2){
-										retorno.setVariableValue(troca1, copia2.get(0).getId());
-										retorno.setVariableValue(troca2, copia2.get(1).getId());
-											}
-									if(copia2.size()==1)retorno.setVariableValue(troca2, copia2.get(1).getId());
-									
+					if(verificaChoque){
+						numero2=1;// força entrar em uma das optativas
+					}
+					if (semestreDaVez==1&&copia1.size()!=0&&numero2<=20){
+						int contador1=copia1.size();
+						for(indexDeCopia=0;indexDeCopia<contador1;indexDeCopia++){
+							System.out.println("semetres impares");
+							System.out.println("i="+i);
+							verificaChoque=choqueDeHorario(retorno, copia1.get(indexDeCopia).getId(),i);
+							if (!verificaChoque){
+								retorno.setVariableValue(i, copia1.get(indexDeCopia).getId());
+								System.out.println("não houve choque, coloquei o id: "+copia1.get(indexDeCopia).getId());
+								copia1.remove(indexDeCopia);
+								temQuePagar-=1;
+								System.out.println("tem que pagar: "+temQuePagar);
+								break;
 								}
-								semestreDaVez=mudaSemestre (semestreDaVez);
 						}
-				}else if (lugarPraZero!=0){
+				
+						
+	
+					}
+					if (semestreDaVez==2&&copia2.size()!=0&&numero2<=20){
+							int contador2=copia2.size();
+							for(indexDeCopia=0;indexDeCopia<contador2;indexDeCopia++){
+								System.out.println("semestre pares");
+								System.out.println("i="+i);
+								verificaChoque=choqueDeHorario(retorno, copia2.get(indexDeCopia).getId(),i);
+								if (!verificaChoque){
+									retorno.setVariableValue(i, copia2.get(indexDeCopia).getId());
+									System.out.println("não houve choque, coloquei o id: "+copia2.get(indexDeCopia).getId());
+									copia2.remove(indexDeCopia);
+									temQuePagar-=1;
+									System.out.println("tem que pagar: "+temQuePagar);
+									break;
+								}
+							}
+					}
+					if (verificaChoque) falhou=true;
+					if (falhou&&lugarPraZero!=0){
 						retorno.setVariableValue(i, 0);
 						lugarPraZero-=1;
-						}else{
-							continue;
-						}
-	modulo8+=1; 
+						System.out.println("coloquei 0");
+						//System.out.println("i: "+i);
+						System.out.println("lugar para 0: "+lugarPraZero);
+						System.out.println("falta pagar: "+temQuePagar);
+					}		
+				}
+	Collections.shuffle(copia0);
+	Collections.shuffle(copia1);
+	Collections.shuffle(copia2);
+
+	modulo8+=1;
+	if (modulo8%8==0&&modulo8!=0){
+		semestreDaVez=mudaSemestre (semestreDaVez);
 		}
-
+	 }
 		return retorno;
-	}
-
+  }
+	
+	
+	
+	
 	int contador=0;
 	@Override
 	/**
@@ -461,6 +434,7 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		this.setNumberOfVariables(preparacao.getPeriodosRestantes()*8);
 		this.problemaPreparado = preparacao;		
 		this.upperBound=preparacao.getDisciplinas().size();
+		//this.upperBound=0;
 		this.Disciplinas=preparacao.getDisciplinas();
 		MontaHasMap();
 		montaNaoPagas();

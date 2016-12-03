@@ -15,7 +15,95 @@ private PreparacaoDoProblema preparacao;
 private List <Disciplina> DisciplinasObrigatorias= new ArrayList();
 private List <Disciplina> Disciplinas= new ArrayList();
 private HashMap <String, Disciplina> disciplinaMap = new HashMap <String, Disciplina>();
+
+
 private Aluno aluno;
+
+
+	public void removeForaDeOrdemDePreRequisito(){
+		HashMap <Integer, Integer> ordemDeMatricula = new HashMap <Integer, Integer>();
+		List<IntegerSolution>copia= new ArrayList<>();
+		copia.addAll(this.solution);
+		System.out.println("{tamanho de solution no fim do metodo remove Fora De Ordem De PreRequisito: }"+ this.solution.size());
+		for (IntegerSolution S:this.solution){
+			String[] L;
+			String Buffer=S.toString();
+			//System.out.println(S);
+			L=Buffer.split(" ");			
+			float temp=Float.parseFloat(L[S.getNumberOfVariables()+2]);
+			int modulo8=8;
+			//ordemDeMatricula.put(1, 1);
+			int contador=0;
+			for (Disciplina D: this.aluno.getDiscPagas()){
+				ordemDeMatricula.put(D.getCodigo(),contador);
+				contador+=1;
+			}
+			
+			boolean pare=false;
+			for (int i=0; i<this.preparacao.getTempoDeFormatura()*8;i+=8){
+				try {
+					if (!L[i].equals("0"))ordemDeMatricula.put(this.disciplinaMap.get(L[i]).getCodigo(), i+contador);
+					for (Integer IT:this.disciplinaMap.get(L[i]).getPreRequisitos()){
+						System.out.println("estou interanod dentro do array de prerequisitos");
+						System.out.println("modulo8="+modulo8);
+						System.out.println("lista de pre requisitos"+this.disciplinaMap.get(L[i]).getPreRequisitos());
+						System.out.println("prerequisito"+IT);
+						System.out.println(ordemDeMatricula.get(IT));
+						int ordem=(int)ordemDeMatricula.get(IT);
+						System.out.println("ordem="+ordem);
+						
+						if (ordem>modulo8){
+							copia.remove(S);
+							pare=true;
+							System.out.println("removi pois não esta em orde");
+							break;
+						}
+				}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				if (i%8==0&&i!=0){
+					modulo8=(i%8)*8;
+				}
+				if (pare) break;
+			}
+		}
+	this.solution=copia;
+	System.out.println("{tamanho de solution no fim do metodo remove Fora De Ordem De PreRequisito: }"+ this.solution.size());
+
+		
+		
+	}
+	public void removeMenorQueTres(){
+		List<IntegerSolution>copia= new ArrayList();
+		copia.addAll(this.solution);
+		System.out.println("tamanho de solution no inicio do metodo remove menos que tres: }"+ this.solution.size());
+		for (IntegerSolution S:this.solution){
+			String[] L;
+			String Buffer="";
+			Buffer=S.toString();
+			//System.out.println(S);
+			L=Buffer.split(" ");			
+			float temp=Float.parseFloat(L[S.getNumberOfVariables()+2]);
+			int fim = (int)temp;
+			int contaCadeira=0;
+			int modulo8=0;
+			for (int i=0; i<this.preparacao.getTempoDeFormatura()*8;i++){
+				if (!L[i].equals("0")){
+					//System.out.println("oh nos aqui de novo"+L[i]);
+					contaCadeira+=1;
+				}
+				if (modulo8%8==0&&modulo8!=0){	
+					if(contaCadeira<3) copia.remove(S);
+					contaCadeira=0;
+				}
+				modulo8+=1;
+			}
+		}
+	this.solution=copia;
+	System.out.println("tamanho de solution no inicio do metodo remove menos que tres: }"+ this.solution.size());
+	}
+
 
 public void MontaHasMap(){
 for (Disciplina D : this.Disciplinas ) {
@@ -180,6 +268,8 @@ for (Disciplina D : this.Disciplinas ) {
 		removeNaoContemplaObrigatorias();
 		MontaHasMap();
 		removeChoqueDeHorario();
+		removeMenorQueTres();
+		removeForaDeOrdemDePreRequisito();
 		
 	}
 
