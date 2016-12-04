@@ -62,6 +62,7 @@ public class Main {
 
 		JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 		PosProcessamento pos=new PosProcessamento(population,preparacao);
+		population=pos.getSolution();
 		printFinalSolutionSet(population);
 //		if (!referenceParetoFront.equals("")) {
 //			printQualityIndicators(population, referenceParetoFront);

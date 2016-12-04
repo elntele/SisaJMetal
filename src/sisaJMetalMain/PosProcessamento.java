@@ -256,6 +256,11 @@ for (Disciplina D : this.Disciplinas ) {
 	}
 	
 	
+	
+	public List<IntegerSolution> getSolution() {
+		return solution;
+	}
+	
 	public PosProcessamento(List<IntegerSolution> solution, PreparacaoDoProblema preparacao) {
 		super();
 		this.solution = solution;
