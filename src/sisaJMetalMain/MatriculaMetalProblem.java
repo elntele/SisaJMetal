@@ -149,10 +149,10 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		for (int k=0;k<5;k++){
 			if ((horario1[k].equals(horario2[k]))&&(!horario1[k].equals(""))&&(!horario2[k].equals(""))){
 				chocouHorario =true;
-				System.out.println("houve choque no horario: ");
-				System.out.println("["+horario1[0]+" "+" "+horario1[1]+" "+horario1[2]+" "+horario1[3]+" "+horario1[4]+"]");
-				System.out.println("["+horario2[0]+" "+" "+horario2[1]+" "+horario2[2]+" "+horario2[3]+" "+horario2[4]+"]");
-				System.out.println(horario1[k]+" é igual a "+horario2[k]);
+//				System.out.println("houve choque no horario: ");
+//				System.out.println("["+horario1[0]+" "+" "+horario1[1]+" "+horario1[2]+" "+horario1[3]+" "+horario1[4]+"]");
+//				System.out.println("["+horario2[0]+" "+" "+horario2[1]+" "+horario2[2]+" "+horario2[3]+" "+horario2[4]+"]");
+//				System.out.println(horario1[k]+" é igual a "+horario2[k]);
 	
 				break;
 			}
@@ -165,7 +165,7 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 				boolean retornado=false;
 				String Buffer="";
 				Buffer=sol.toString();
-				System.out.println("buffer "+Buffer);
+//				System.out.println("buffer "+Buffer);
 				String []L=Buffer.split(" ");
 				List <String> fatia=new ArrayList<>();
 				System.arraycopy(L, 1, L, 0, this.problemaPreparado.getPeriodosRestantes()*8);
@@ -173,16 +173,16 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 				String[] horario1;
 				String [] horario2;
 				//System.out.println("i="+i);
-				System.out.println(fatia);
-				System.out.println("id: "+id);
+//				System.out.println(fatia);
+//				System.out.println("id: "+id);
 				for (String S: fatia){
 					if (!S.equals("0")){
 						horario1=this.disciplinaMap.get(Integer.parseInt(S)).getDiaHora();
 						horario2=this.disciplinaMap.get(id).getDiaHora();				
 						if (comparaDiahora(horario1, horario2)){
 							retornado =true;
-							System.out.println("id disciplina1: "+S);
-							System.out.println("id disciplina2: "+id);
+//							System.out.println("id disciplina1: "+S);
+//							System.out.println("id disciplina2: "+id);
 							break;
 						}
 					}
@@ -221,6 +221,13 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		copia0.addAll(this.NaoPagas0);
 		copia1.addAll(this.NaoPagas1);
 		copia2.addAll(this.NaoPagas2);
+		boolean t = true;
+//		while (t){
+//			for (Disciplina D: copia0)System.out.println("copia0: "+D.getId());
+//			for (Disciplina D: copia1)System.out.println("copia1: "+D.getId());
+//			for (Disciplina D: copia2)System.out.println("copia2: "+D.getId());
+			
+//		}
 		int semestreDaVez=calendario();
 		Random gerador = new Random();		 
         double numero;// utilizado para guardar resultado de randômico entre 0 e 100 
@@ -229,9 +236,10 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
         int troca1=0; // guarda posição com zero antes do periodo final para uma possivel troca
         int troca2=0;// guarda posição com zero antes do periodo final para uma possivel troca
         int lugarPraZero=tamanhoDaSugestao-temQuePagar; //// guarda quantidade de posições que pode-se alocar 0
+        boolean T=true;
         
         //Psc.: 0 significa que não há disciplinas na posição do array 
-//        retorno=resetSugestao(retorno,tamanhoDaSugestao);
+        retorno=resetSugestao(retorno,tamanhoDaSugestao);
 //        boolean T=true;
 //        while (T) System.out.println(temQuePagar+" "+lugarPraZero);
         for (int i=0;i<tamanhoDaSugestao;i++){
@@ -242,31 +250,27 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 					}
 			int indexDeCopia =0;//inteiro que guarda o randâmico entre 0 e o tamanho do arraylist de disciplinas não pagas 
 			
-//			if (modulo8>=4&&contaCadeira<3){// se o contador modulo8 estiver entre a posição 5 e 8 
-//				numero=38.00;				// e contador de disciplinas for menor que 3 ele força
-//				}							// o alg. a colocar mais disciplinas no periodo	
-//			
 			if (numero<=37.5&&lugarPraZero!=0){
 				retorno.setVariableValue(i, 0);
 				lugarPraZero-=1;
-				System.out.println("opa sortiei o 0");
+//				System.out.println("opa sortiei o 0");
 				} 
 				if ((copia0.size()!=0||copia1.size()!=0||copia2.size()!=0)&&temQuePagar!=0&&numero>37.5){
-					System.out.println("entrei i:="+i);
+	//				System.out.println("entrei i:="+i);
 					boolean verificaChoque=true;
 					double numero2=gerador.nextDouble()*100;
 					if (copia0.size()!=0&&numero2>20){
 						int contador0=copia0.size();
 						for(indexDeCopia=0;indexDeCopia<contador0;indexDeCopia++){
-							System.out.println("diciplinas obrigatórias todo periodo");
-							System.out.println("i="+i);
+//							System.out.println("diciplinas obrigatórias todo periodo");
+//							System.out.println("i="+i);
 							verificaChoque=choqueDeHorario(retorno, copia0.get(indexDeCopia).getId(),i);
 							if (!verificaChoque){
 								retorno.setVariableValue(i, copia0.get(indexDeCopia).getId());
-								System.out.println("não houve choque, coloquei o id: "+copia0.get(indexDeCopia).getId());
+//								System.out.println("não houve choque, coloquei o id: "+copia0.get(indexDeCopia).getId());
 								copia0.remove(indexDeCopia);
 								temQuePagar-=1;
-								System.out.println("tem que pagar: "+temQuePagar);
+//								System.out.println("tem que pagar: "+temQuePagar);
 								break;
 							}
 						}
@@ -277,15 +281,15 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 					if (semestreDaVez==1&&copia1.size()!=0&&numero2<=20){
 						int contador1=copia1.size();
 						for(indexDeCopia=0;indexDeCopia<contador1;indexDeCopia++){
-							System.out.println("semetres impares");
-							System.out.println("i="+i);
+//							System.out.println("semetres impares");
+//							System.out.println("i="+i);
 							verificaChoque=choqueDeHorario(retorno, copia1.get(indexDeCopia).getId(),i);
 							if (!verificaChoque){
 								retorno.setVariableValue(i, copia1.get(indexDeCopia).getId());
-								System.out.println("não houve choque, coloquei o id: "+copia1.get(indexDeCopia).getId());
+//								System.out.println("não houve choque, coloquei o id: "+copia1.get(indexDeCopia).getId());
 								copia1.remove(indexDeCopia);
 								temQuePagar-=1;
-								System.out.println("tem que pagar: "+temQuePagar);
+//								System.out.println("tem que pagar: "+temQuePagar);
 								break;
 								}
 						}
@@ -296,15 +300,15 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 					if (semestreDaVez==2&&copia2.size()!=0&&numero2<=20){
 							int contador2=copia2.size();
 							for(indexDeCopia=0;indexDeCopia<contador2;indexDeCopia++){
-								System.out.println("semestre pares");
-								System.out.println("i="+i);
+//								System.out.println("semestre pares");
+//								System.out.println("i="+i);
 								verificaChoque=choqueDeHorario(retorno, copia2.get(indexDeCopia).getId(),i);
 								if (!verificaChoque){
 									retorno.setVariableValue(i, copia2.get(indexDeCopia).getId());
-									System.out.println("não houve choque, coloquei o id: "+copia2.get(indexDeCopia).getId());
+//									System.out.println("não houve choque, coloquei o id: "+copia2.get(indexDeCopia).getId());
 									copia2.remove(indexDeCopia);
 									temQuePagar-=1;
-									System.out.println("tem que pagar: "+temQuePagar);
+//									System.out.println("tem que pagar: "+temQuePagar);
 									break;
 								}
 							}
@@ -313,10 +317,10 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 					if (falhou&&lugarPraZero!=0){
 						retorno.setVariableValue(i, 0);
 						lugarPraZero-=1;
-						System.out.println("coloquei 0");
-						//System.out.println("i: "+i);
-						System.out.println("lugar para 0: "+lugarPraZero);
-						System.out.println("falta pagar: "+temQuePagar);
+//						System.out.println("coloquei 0");
+//						//System.out.println("i: "+i);
+//						System.out.println("lugar para 0: "+lugarPraZero);
+//						System.out.println("falta pagar: "+temQuePagar);
 					}		
 				}
 	Collections.shuffle(copia0);
@@ -328,6 +332,7 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 		semestreDaVez=mudaSemestre (semestreDaVez);
 		}
 	 }
+    //    System.out.println("sugestão do create: "+ retorno);
 		return retorno;
   }
 	
@@ -423,9 +428,6 @@ public class MatriculaMetalProblem extends AbstractIntegerProblem {
 	}
 	
 	
-	public void removeDisc(){
-		
-	}
 
 
 	public MatriculaMetalProblem(PreparacaoDoProblema preparacao) {
