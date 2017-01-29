@@ -1,0 +1,1 @@
+caso a jar do jemetal (JmetalTotal) apresente falha excessão favor apontar o projeto sisajmetal para as jars commons-io-2.4 e commons-lang3-3.3.2. 
