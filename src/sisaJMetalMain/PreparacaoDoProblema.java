@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import sisaJmetalDAO.DisciplinaDAO;
+//import sisaJmetalbeans.Aluno;
 import sisaJmetalbeans.Aluno;
 import sisaJmetalbeans.Disciplina;
 
@@ -14,8 +15,9 @@ public class PreparacaoDoProblema {
 //	private List <Float> varianciaDoPeriodo=new ArrayList<Float>();
 	private List<Disciplina> naoPagas=new  ArrayList <Disciplina>();
 	private float variaQtdDiscPorPeriodo;
-	DisciplinaDAO disciplinaDAO = new DisciplinaDAO();	
-	List<Disciplina> disciplinas=disciplinaDAO.getDisciplinas();
+//	DisciplinaDAO disciplinaDAO = new DisciplinaDAO();	
+//	List<Disciplina> disciplinas=disciplinaDAO.getDisciplinas();
+	List<Disciplina> disciplinas;//depois tem que apagar e decomentar as 2 de cima
 	private int[] sugestaoMat;
 	private int AreaDePreferencia;
 	private int numberOfObjetives=5;
@@ -64,127 +66,50 @@ public class PreparacaoDoProblema {
 		this.periodosRestantes=16-periodosGastos;
 	}
 	
-
-//	/**
-//	 * simula a lista de displicinas que o aluno já pagou mas sera
-//	 * abandonado porque isso será recuperado do cadastro do aluno no banco
-//	 */
-//	//disciplinas pagas
-	public void montaListaDisciplinasPagas(){
-		int i=1;
-		List<Disciplina> transfer=new ArrayList();
-		for (Disciplina d:disciplinas){
-			//***********************alunos de jorge*****************
-//			if (d.getCodigo()!=14112)//aluno1
-//			if (d.getId()!=3&&d.getId()!=7&&d.getId()!=13&&d.getId()!=17
-//					&&d.getId()!=20&&d.getId()!=23&&d.getId()!=24)//aluno2
-//			if (d.getId()!=10&&d.getId()!=12&&d.getId()!=13
-//					&&d.getId()!=14&&d.getId()!=15
-//					&&d.getId()!=16&&d.getId()!=17&&d.getId()!=18
-//					&&d.getId()!=19&&d.getId()!=20&&d.getId()!=21
-//					&&d.getId()!=22&&d.getId()!=23&&d.getId()!=24
-//					&&d.getId()!=25)// aluno3	
-//				if (d.getId()!=13&&d.getId()!=14
-//				&&d.getId()!=15&&d.getId()!=17&&d.getId()!=21
-//				&&d.getId()!=22&&d.getId()!=23&&d.getId()!=24
-//				&&d.getId()!=25)// aluno4	
-					if (
-					d.getId()!=16&&d.getId()!=17
-					&&d.getId()!=18&&d.getId()!=19&&d.getId()!=20
-					&&d.getId()!=21&&d.getId()!=22&&d.getId()!=23
-					&&d.getId()!=24&&d.getId()!=25)// aluno5	
-			//********************alunos de italo*********************************
-//				if (d.getId()!=2 && d.getId()!=4 && d.getId()!=5 && d.getId()!=7 && d.getId()!=8 && d.getId()!=9 && d.getId()!=10 && d.getId()!=11 && d.getId()!=12
-//	              && d.getId()!=13 && d.getId()!=14 && d.getId()!=15)//aluno1
-				
-//				if (d.getId()!=1 && d.getId()!=2 && d.getId()!=3 && d.getId()!=4 && d.getId()!=5 && d.getId()!=6
-//				&&d.getId()!=7&&d.getId()!=8&&d.getId()!=9&&d.getId()!=10&&d.getId()!=11&&d.getId()!=12&&d.getId()!=13
-//				&&d.getId()!=14&&d.getId()!=15&&d.getId()!=16&&d.getId()!=17&&d.getId()!=18&&d.getId()!=19
-//				&&d.getId()!=20 &&d.getId()!=21 &&d.getId()!=22 &&d.getId()!=23 &&d.getId()!=24 &&d.getId()!=25)//aluno2
-				
-//				if (d.getId()!=1 && d.getId()!=2 && d.getId()!=3 && d.getId()!=4 && d.getId()!=5 && d.getId()!=6
-//				&&d.getId()!=7&&d.getId()!=8&&d.getId()!=9&&d.getId()!=10&&d.getId()!=11&&d.getId()!=12&&d.getId()!=13
-//				&&d.getId()!=14&&d.getId()!=17&&d.getId()!=18&&d.getId()!=19
-//				&&d.getId()!=20 &&d.getId()!=21 &&d.getId()!=22 &&d.getId()!=23 &&d.getId()!=24 &&d.getId()!=26 && d.getId()!=27 &&d.getId()!=30 && d.getId()!=34)//aluno3
-
 	
-//			********************alunos de jefferson*************************************
-				/**
-				*
-				*	Condicional que insere todas as disciplinas obrigatórias pagas de 1 a 25 menos as que pertencem a condicional abaixo
-				*/
-				
-//					if (d.getId()!=8&&d.getId()!=18&&d.getId()!=19&&d.getId()!=21
-//					&&d.getId()!=22&&d.getId()!=23&&d.getId()!=26&&d.getId()!=27
-//					&&d.getId()!=28&&d.getId()!=29&&d.getId()!=30&&d.getId()!=31
-//					&&d.getId()!=36&&d.getId()!=37&&d.getId()!=37&&d.getId()!=47
-//					&&d.getId()!=52&&d.getId()!=53&&d.getId()!=54&&d.getId()!=55
-//					&&d.getId()!=56&&d.getId()!=61&&d.getId()!=62&&d.getId()!=65
-//					&&d.getId()!=66)//aluno1
+	
+	
+	
+	
+	
+	
+	
 
-				/**
-				*
-				*	Condicional que insere todas as disciplinas obrigatórias pagas de 1 a 25 menos as que pertencem a condicional abaixo
-				*/
-				
-//				if (d.getId()!=13)//aluno2
-				
-				/**
-				*
-				*	Condicional que insere todas as disciplinas obrigatórias pagas de 1 a 25 menos as que pertencem a condicional abaixo
-				*/
-				
-//				if (d.getId()!=11&&d.getId()!=16&&d.getId()!=25)
-				
-				
-//		***********************alunos de leo*********************
-//				if (d.getId()!=1&&d.getId()!=2&&d.getId()!=3&d.getId()!=4&&d.getId()!=5&&d.getId()!=6
-//				&&d.getId()!=7&&d.getId()!=8&&d.getId()!=9&&d.getId()!=10&&d.getId()!=11&&d.getId()!=12&&d.getId()!=13
-//				&&d.getId()!=14&&d.getId()!=15&&d.getId()!=16&&d.getId()!=17&&d.getId()!=18&&d.getId()!=19
-//				&&d.getId()!=20)//aluno1
-
-//				if (d.getId()!=1&&d.getId()!=2&&d.getId()!=3&d.getId()!=4&&d.getId()!=5&&d.getId()!=6
-//				&&d.getId()!=7&&d.getId()!=8&&d.getId()!=9&&d.getId()!=10&&d.getId()!=11&&d.getId()!=12&&d.getId()!=13
-//				&&d.getId()!=14&&d.getId()!=15&&d.getId()!=16&&d.getId()!=17&&d.getId()!=18&&d.getId()!=19
-//				&&d.getId()!=20&&d.getId()!=21&&d.getId()!=22&&d.getId()!=23&&d.getId()!=24&&d.getId()!=25)//aluno2
-
-//				if (d.getId()!=1&&d.getId()!=2&&d.getId()!=3&d.getId()!=4&&d.getId()!=5&&d.getId()!=6
-//				&&d.getId()!=7&&d.getId()!=8&&d.getId()!=9&&d.getId()!=10&&d.getId()!=11&&d.getId()!=12&&d.getId()!=13
-//				&&d.getId()!=14&&d.getId()!=17&&d.getId()!=18&&d.getId()!=19
-//				&&d.getId()!=20)//aluno3
-
-//********************************alunos de pedro****************************
-//				if (d.getId()!=23&&d.getId()!=21) //aluno1
-				
-//				if (d.getId()!=6&&d.getId()!=11&&d.getId()!=14&&d.getId()!=16&&
-//				d.getId()!=17&&d.getId()!=21&&d.getId()!=22&&d.getId()!=23&&
-//				d.getId()!=24&&d.getId()!=25) //aluno2
-
-
-
-//				if (d.getId()!=8&&d.getId()!=18&&d.getId()!=19&&d.getId()!=21
-//				&&d.getId()!=16&&d.getId()!=23&&d.getId()!=24&&d.getId()!=25)//aluno3
-
-
-
-
-				
-			{
-				transfer.add(d);
-				}
-			i+=1;
-			if (i==26) break;
-			}
-		// aluno 4
-//		transfer.add(this.disciplinas.get(27));
-//		transfer.add(this.disciplinas.get(28));
-//		transfer.add(this.disciplinas.get(29));
-//		transfer.add(this.disciplinas.get(30));
-//		transfer.add(this.disciplinas.get(33));
-		
-		aluno.setDiscPagas(transfer);
-		for (Disciplina D:this.aluno.getDiscPagas() ){System.out.println("disciplina paga id: "+D.getId());}
-		}
+////	/**
+////	 * simula a lista de displicinas que o aluno já pagou mas sera
+////	 * abandonado porque isso será recuperado do cadastro do aluno no banco
+////	 */
+////	//disciplinas pagas
+//	public void montaListaDisciplinasPagas(){
+//		int i=1;
+//		List<Disciplina> transfer=new ArrayList();
+//		for (Disciplina D:this.aluno.getDiscPagas() ){System.out.println("disciplina paga antes id: "+D.getId());}
+//		for (Disciplina D:this.aluno.getDiscPagas() ){
+//			 for (Disciplina Di:this.disciplinas ){
+//				if (D.getId()==Di.getId())  transfer.add(Di);
+//			 }
+//		}
+//		aluno.setDiscPagas(transfer);
+//		
+////		for (Disciplina d:disciplinas){
+////
+////					if (
+////					d.getId()!=16&&d.getId()!=17
+////					&&d.getId()!=18&&d.getId()!=19&&d.getId()!=20
+////					&&d.getId()!=21&&d.getId()!=22&&d.getId()!=23
+////					&&d.getId()!=24&&d.getId()!=25)// aluno5	
+////
+////				
+////			{
+////				transfer.add(d);
+////				}
+////			i+=1;
+////			if (i==26) break;
+////			}
+//		
+////		aluno.setDiscPagas(transfer);
+//		for (Disciplina D:this.aluno.getDiscPagas() ){System.out.println("disciplina paga depois id: "+D.getId());}
+//		}
 	
 //	/**
 //	 * metodo simula a lista de disciplinas acompanhadas e reprovadas
@@ -197,68 +122,56 @@ public class PreparacaoDoProblema {
 	public void montaListaDisciplinasReprovadas(){
 		List<Disciplina> transfer=new ArrayList();
 		for (Disciplina d:disciplinas){
-//		***************************	alunos de jorge*********************
-//			if (d.getCodigo()==14112)//aluno1
-//			if (d.getId()==3&&d.getId()==7&&d.getId()==13&&d.getId()==17
-//					&&d.getId()==20&&d.getId()==23)//aluno2
-//			if (d.getId()==10&&d.getId()==12&&d.getId()==13
-//					&&d.getId()==14&&d.getId()==15
-//					&&d.getId()==16&&d.getId()==17&&d.getId()==18
-//					&&d.getId()==19&&d.getId()==20&&d.getId()==21
-//					&&d.getId()==22&&d.getId()==23&&d.getId()==24
-//					&&d.getId()==25)//aluno3
-//			
-//				if (d.getId()==13&&d.getId()==14&&d.getId()==15&&d.getId()==17)//aluno4
-					if (d.getId()==16&&d.getId()==17&&d.getId()==20&&d.getId()==21)//aluno5
-//				************************alunos de italo***********************
-//				if (d.getId()==1 && d.getId()==3)//aluno1
-//				if (d.getId()==26 && d.getId()==28)//alumo2
-//				if (d.getId()==11 && d.getId()==16 && d.getId()==15 && d.getId()==22 && d.getId()==25)//aluno3
-			
-//				**********************alunos de jefferson*****************************				
-				
-				/**
-				*
-				*	Condicional que insere as disciplinas reprovadas pelo aluno.
-				*/				
-				
-//				if (d.getId()==8)//aluno1
 
-				/**
-				*
-				*	Condicional que insere as disciplinas reprovadas pelo aluno.
-				*/				
-				
-//				if (d.getId()==13)//aluno2
-				/**
-				*
-				*	Condicional que insere as disciplinas reprovadas pelo aluno.
-				*/				
-				
-//				if (d.getId()==11&&d.getId()==16&&d.getId()==25)//aluno3
-
-//***************************alunos de leo***************
-//			boolean t=false;
-//				if(t)// aluno1
-				
-//					if (t)//aluno2
-//					if (d.getId()==16&&d.getId()==15)//aluno3
-			
-//****************************alunos de pedro****************************
-//				if (d.getId()==21)  //aluno1
-
-//				if (d.getId()==6&&d.getId()==11)  //aluno2
-
-//				if (d.getId()==8&&d.getId()==16)  //aluno3
-
-
-			{
+			if (d.getId()==16&&d.getId()==17&&d.getId()==20&&d.getId()==21){//aluno5
 				transfer.add(d);
 				aluno.setDiscAcompanhada(transfer);
 				aluno.setDiscRepro(transfer);
 			}
 		}
 	}
+	
+	
+	
+//	/**
+//	 * simula a lista de displicinas que o aluno já pagou mas sera
+//	 * abandonado porque isso será recuperado do cadastro do aluno no banco
+//	 */
+//	//disciplinas pagas
+	public void montaListaDisciplinasPagas(){
+		int i=1;
+		List<Disciplina> transfer=new ArrayList();
+		
+		for (Disciplina d:this.disciplinas){
+
+					if (d.getId()!=7
+					&&d.getId()!=10&&d.getId()!=13&&d.getId()!=14
+					&&d.getId()!=15&&d.getId()!=16&&d.getId()!=17
+					&&d.getId()!=18&&d.getId()!=19&&d.getId()!=20
+					&&d.getId()!=21&&d.getId()!=22&&d.getId()!=23
+					&&d.getId()!=24&&d.getId()!=25)// aluna alana	
+			{
+				transfer.add(d);
+				}
+			i+=1;
+			if (i==26) break;
+			}
+		
+		aluno.setDiscPagas(transfer);
+		for (Disciplina D:this.aluno.getDiscPagas() ){System.out.println("disciplina pagas por alanaid: "+D.getId());}
+		}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * seta a variavel QtdDiscplinasParaConcluir com o numero de disciplinas
@@ -277,7 +190,6 @@ public class PreparacaoDoProblema {
 	public void montaNaoPagas(){
 		List<Disciplina> faltaPagar=new ArrayList();
 		boolean presenca=false;
-		
 		for( Disciplina D: disciplinas){
 			for (Disciplina Da:this.aluno.getDiscPagas()){
 				if (D.getId()==Da.getId()) {
@@ -289,6 +201,7 @@ public class PreparacaoDoProblema {
 			presenca=false;
 		}
 		this.naoPagas=faltaPagar;
+		
 	}
 	
 	/**
@@ -701,40 +614,17 @@ public class PreparacaoDoProblema {
 	public float getTempoExtraClasse() {
 		return tempoExtraClasse;
 	}
-/**
- * contrutor para testeComPrint
- * @param aluno
- */
-
-//	public PreparacaoDoProblema(Aluno aluno, List<Disciplina> listaGeral) {
-//		super();
-//		this.aluno = aluno;
-//		this.disciplinas = listaGeral;
-////		montaListaDisciplinasPagas();
-////		montaListaDisciplinasReprovadas();
-//		montaNaoPagas();
-//		montaAredePreferencia();
-//		montaQtdDiscplinasParaConcluir();
-//		tempoDeFimDecurso ();
-//		montasugestao();
-//		contaTempoDeFormatura();
-//		tempoDeEstudoExtraClasse();
-//		varianciaTotal();
-//		varianciaDeQtdDeDiscPorPeriodo();
-//		verificaAcompNoPrimeDasug();
-//		qtdDeDisciplinasForaDeMinhaArea();
-////		testaDiahora();
-//	}
 	
 /**
  * contrutor para o jmetal	
  */
 
-	public PreparacaoDoProblema(Aluno aluno) {
+	public PreparacaoDoProblema(Aluno aluno, List<Disciplina> listaGeral) {
 		super();
 		this.aluno = aluno;
-		montaListaDisciplinasPagas();
-		montaListaDisciplinasReprovadas();
+//		montaListaDisciplinasPagas();
+		//montaListaDisciplinasReprovadas();
+		this.disciplinas = listaGeral;
 		montaNaoPagas();
 		montaAredePreferencia();
 		montaQtdDiscplinasParaConcluir();

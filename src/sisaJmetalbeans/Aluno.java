@@ -1,7 +1,13 @@
 package sisaJmetalbeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+
+
+
+
 
 
 public class Aluno{
@@ -14,7 +20,6 @@ public class Aluno{
 	private int anoIngresso;// ano de ingresso 
 	private int semestreIngresso;// semestre de ingresso
 	private int tempDispExtrCla;//tempo disponível para estudar fora da faculdade
-	private int cargaHorariaDoPeriodo; // tem que ser entre 150 e 480
 	
 //	private List<SugestaoMatricula> sugestMat;//objeto sugestão de matricula
 	
@@ -36,7 +41,7 @@ public class Aluno{
 	}
 	
 	public Aluno(String nome, String cpf, boolean identificador, String email, int anoIngresso, int semestreIngresso,
-			int tempDispExtrCla, String areaPref, int qtdPeriTranc, int cargaHorariaDoPeriodo) {
+			int tempDispExtrCla, String areaPref, int qtdPeriTranc) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
@@ -47,7 +52,6 @@ public class Aluno{
 		this.tempDispExtrCla = tempDispExtrCla;
 		this.areaPref = areaPref;
 		this.qtdPeriTranc = qtdPeriTranc;
-		this.cargaHorariaDoPeriodo = cargaHorariaDoPeriodo;
 	}
 
 	public Long getId() {
@@ -130,13 +134,7 @@ public class Aluno{
 		this.qtdPeriTranc = qtdPeriTranc;
 	}
 
-	public int getCargaHorariaDoPeriodo() {
-		return cargaHorariaDoPeriodo;
-	}
 
-	public void setCargaHorariaDoPeriodo(int cargaHorariaDoPeriodo) {
-		this.cargaHorariaDoPeriodo = cargaHorariaDoPeriodo;
-	}
 
 	public List<Disciplina> getDiscPagas() {
 		return discPagas;

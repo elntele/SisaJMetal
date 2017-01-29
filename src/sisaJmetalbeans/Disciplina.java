@@ -147,9 +147,20 @@ public class Disciplina {
 		}		
 		}
 	}
+	
+	
+	
 
 	public List<Aluno> getAlunosPagaram() {
 		return alunosPagaram;
+	}
+
+	public void setGrauDificuldade(float grauDificuldade) {
+		this.grauDificuldade = grauDificuldade;
+	}
+
+	public void setPreRequisitos(List<Integer> preRequisitos) {
+		this.preRequisitos = preRequisitos;
 	}
 
 	public void setAlunosPagaram(List<Aluno> alunosPagaram) {

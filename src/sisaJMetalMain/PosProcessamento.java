@@ -146,45 +146,6 @@ private Aluno aluno;
 	System.out.println("{método remove menos que tres}tamanho tamanho final da solution : "+ this.solution.size());
 	}
 
-	
-	
-	//	public void removeMenorQueTres(){
-//		List<IntegerSolution>copia= new ArrayList();
-//		copia.addAll(this.solution);
-//		System.out.println("{método remove menos que tres}tamanho tamanho inicial da solution : "+ this.solution.size());
-//		for (IntegerSolution S:this.solution){
-//			String[] L;
-//			L=S.toString().split(" ");
-//			int contaCadeira=0;
-//			int modulo8=0;
-//			String tempo="";
-//			int w=0;
-//			for (String Z: L){			
-//				if (Z.equals("Objectives:")){
-//					tempo=L[w+1];
-//					break;
-//				}
-//				w+=1;
-//			}
-//			float temp=Float.parseFloat(tempo);
-//			int fim = (int)temp;
-//
-//			for (int i=1; i<(fim*8)+1/*(this.preparacao.getTempoDeFormatura()*8)+1*/;i++){
-//				if (!L[i].equals("0")){
-//					contaCadeira+=1;
-//				}
-//				if (modulo8%8==0&&modulo8!=0){	
-//					if(contaCadeira<3) {
-//						copia.remove(S);
-//					}
-//					contaCadeira=0;
-//				}
-//				modulo8+=1;
-//			}
-//		}
-//	this.solution=copia;
-//	System.out.println("{método remove menos que tres}tamanho tamanho final da solution : "+ this.solution.size());
-//	}
 
 
 public void MontaHasMap(){

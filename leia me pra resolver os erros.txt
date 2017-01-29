@@ -1,0 +1,5 @@
+esta dando erro no projeto pq o jmetal que ele esta apontando foi modificado.
+o que serve para este projeto esta dentro ja pasta jemetal master:
+C:\Users\jorge\Desktop\rural 2\2016.2\projetão\jMetal-master
+zipado e em segurança com o nome de:
+jMetal-master18.01.17 alg funcionando.rar

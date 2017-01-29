@@ -4,8 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/JMetalSisa2/SisaJMetal/postgresql-9.4.1211.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-algorithm"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-problem"/>
+	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/jmetal alterado jar/jars/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/jmetal alterado jar/jars/commons-lang3-3.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jorge/Desktop/rural 2/2016.2/projetão/jmetal alterado jar/jars/jmetalTotal.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
