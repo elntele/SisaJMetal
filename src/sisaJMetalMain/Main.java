@@ -25,7 +25,7 @@ import sisaJmetalbeans.Aluno;
 import sisaJmetalbeans.Disciplina;
 
 public class Main {
-	public static ArrayList<ArrayList<ArrayList<String>>> main(/*String args[]*/Aluno aluno, List <Disciplina> disciplinasGerais ) throws FileNotFoundException {
+	public static ArrayList<ArrayList<ArrayList<String>>> main(/*String args[]*/Aluno aluno, List <Disciplina> disciplinasGerais ) /*throws FileNotFoundException */{
 		Problem<IntegerSolution> problem;
 		Algorithm<List<IntegerSolution>> algorithm;
 		CrossoverOperator<IntegerSolution> crossover;
@@ -69,7 +69,7 @@ public class Main {
 	     * a variavel qtdDeInteracoes conta quantas vezes o algoritmo vai rodar 
 	     */
 	    algorithm = new NSGAIIIBuilder<>(problem,preparacao).setCrossoverOperator(crossover).setMutationOperator(mutation)
-					.setSelectionOperator(selection).setPopulationSize(500).setMaxIterations(30).build();
+					.setSelectionOperator(selection).setPopulationSize(500).setMaxIterations(3).build();
 	    
 	    PosProcessamento pos;
 	    int qtdDeInteracoes=1;
